@@ -1,44 +1,45 @@
 import React from 'react'
-import Nav from '../layouts/publiccom/nav'
-import Head_nav from '../layouts/publiccom/head_nav'
-import Swiper from '../layouts/index/swiper'
-import Recommend from '../layouts/index/recommend'
-import Foot from '../layouts/publiccom/foot'
-import Fixnav from '../layouts/publiccom/fixnav'
-import Hidewindow from '../layouts/index/hidewindow'
-import Modal from '../layouts/index/modal'
-import {connect} from 'umi'
+import Nav from '../components/common/nav/nav'
+import Head_nav from '../components/common/head_nav/head_nav'
+import Swiper from '../components/swiper/swiper'
+import Recommend from '../components/recommend/recommend'
+import Foot from '../components/common/foot/foot'
+import ScrollTop from '../components/common/scrolltop/scrolltop'
+import Hidewindow from '../components/hidewindow/hidewindow'
+import Modal from '../components/modal/modal'
+import { connect } from 'umi'
+import Cookies from 'js-cookie'
 
-class Index extends React.Component{
-    componentDidMount(){
-        this.props.dispatch({
-            type:"toplistinfo/getClickindex",
-            payload:0
-        })
-    }
-    render(){
-
-        const {visible} = this.props.music.recommend
-        const joinedsinger = this.props.music.recommend.joinedsinger[0]
-
-        const musicinfo = this.props.music.recommend.musicinfo[0]
-
-        const {dispatch} = this.props
-        const Modaler = this.props.music.recommend.visible?(<Modal dispatch={dispatch} />):null
+class Index extends React.Component {
+    // componentDidMount() {
+    //     let uid = Cookies.get('uid')
+    //     if (uid && !this.props.userloginfo.userlogstatus) {
+    //         this.props.dispatch({
+    //             type: "recommend/AsyncgetDailyRecommendMusic"
+    //         })
+    //         this.props.dispatch({
+    //             type: 'userinfo/dogetuserdetail',
+    //             payload: parseInt(uid)
+    //         })
+    //     }
+    // }
+    render() {
+        const { IndexSwiper, dailyrecommendmusic, HotJoinedSinger, HotZhubo, NewestAblum, toplisthot, toplistnewest, toplisthotorigin } = this.props.music
+        const { dispatch, userloginfo } = this.props
         return <div>
-        <Nav />
-        <Head_nav  clickIndex={0}/>
-        <Swiper/>
-        <Recommend joinedsinger={joinedsinger} musicinfo={musicinfo} dispatch={dispatch} />
-        <Foot/>
-        <Fixnav/>
-        <Hidewindow />
-        {Modaler}
+            <Nav dispatch={dispatch} logstatus = {userloginfo.userlogstatus} avatarurl={userloginfo.userinfo.avatarUrl} />
+            <Head_nav clickIndex={0} />
+            <Swiper IndexSwiper={IndexSwiper} />
+            <Recommend userloginfo={userloginfo} toplisthot={toplisthot} toplistnewest={toplistnewest} toplisthotorigin={toplisthotorigin} HotJoinedSinger={HotJoinedSinger} NewestAblum={NewestAblum} HotZhubo={HotZhubo} dailyRecommendMusic={dailyrecommendmusic} dispatch={dispatch} />
+            <Foot />
+            <ScrollTop />
+            <Hidewindow />
+            <Modal dispatch={dispatch} />
         </div>
     }
 }
-function mapStateToProps(state){
+function mapStateToProps(state) {
 
-    return {music:state}
+    return { music: state.recommend, userloginfo: state.userinfo }
 }
 export default connect(mapStateToProps)(Index)
