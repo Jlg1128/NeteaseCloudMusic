@@ -24,6 +24,11 @@ export default class Nav extends React.Component {
     log = () => {
         this.props.dispatch({ type: "recommend/setVisible", payload: true })
     }
+    setclick=(index)=>{
+        this.props.dispatch({ type: "recommend/setclickindex", payload: index })
+        console.log('1');
+        
+    }
     render() {
         const { dropdowninfo } = this.state
         const menu = (
@@ -41,14 +46,14 @@ export default class Nav extends React.Component {
         );
         const { logstatus,avatarurl } = this.props
         const { Search } = Input;
-        const { clickindex } = this.state
+        const { clickindex } = this.props
         const profileshow = () => {
             if (logstatus) {
                 return (<Dropdown arrow overlay={menu} placement='bottomCenter' >
                     <img src={avatarurl} style={{ width: 35, height: 35, marginTop: 20, marginLeft: 10, borderRadius: '50%' }} alt="头像" />
                 </Dropdown>)
             } else {
-                return (<h3 className={cssobj.register} onClick={this.log} href="">登录</h3>)
+                return (<h3 className={cssobj.register} onClick={this.log} style={{color:'#cccccc'}}>登录</h3>)
             }
         }
         return <div className={cssobj.nav}>
@@ -59,12 +64,12 @@ export default class Nav extends React.Component {
                 </Link>
             </h1>
             <ul className={cssobj.nav_ul}>
-                <li><a className='link' style={{ backgroundColor: (clickindex === 0) ? 'black' : '' }} onClick={() => this.setState({ clickindex: 0 })}>发现音乐</a></li>
-                <li><a className='link' style={{ backgroundColor: (clickindex === 1) ? 'black' : '' }} onClick={() => this.setState({ clickindex: 1 })}>我的音乐</a></li>
-                <li><a className='link' style={{ backgroundColor: (clickindex === 2) ? 'black' : '' }} onClick={() => this.setState({ clickindex: 2 })}>朋友</a></li>
-                <li><a className='link' style={{ backgroundColor: (clickindex === 3) ? 'black' : '' }} onClick={() => this.setState({ clickindex: 3 })}>商城</a></li>
-                <li><a className='link' style={{ backgroundColor: (clickindex === 4) ? 'black' : '' }} onClick={() => this.setState({ clickindex: 4 })}>音乐人</a></li>
-                <li><a className='link' style={{ backgroundColor: (clickindex === 5) ? 'black' : '' }} onClick={() => this.setState({ clickindex: 5 })}>下载客户端</a></li>
+                <li><a className='link' style={{ backgroundColor: (clickindex === 0) ? 'black' : '' }} onClick  ={()=> this.setclick(0)}>发现音乐</a></li>
+                <li><a className='link' style={{ backgroundColor: (clickindex === 1) ? 'black' : '' }} onClick={()=> this.setclick(1)}>我的音乐</a></li>
+                <li><a className='link' style={{ backgroundColor: (clickindex === 2) ? 'black' : '' }} onClick={()=> this.setclick(2)}>朋友</a></li>
+                <li><a className='link' style={{ backgroundColor: (clickindex === 3) ? 'black' : '' }} onClick={()=> this.setclick(3)}>商城</a></li>
+                <li><a className='link' style={{ backgroundColor: (clickindex === 4) ? 'black' : '' }} onClick={()=> this.setclick(4)}>音乐人</a></li>
+                <li><a className='link' style={{ backgroundColor: (clickindex === 5) ? 'black' : '' }} onClick={()=> this.setclick(5)}>下载客户端</a></li>
                 <Search placeholder="音乐/视频/电台/用户" allowClear='true' className={cssobj.nav_search} onSearch={value => console.log(value)} />
             </ul>
             <button className={cssobj.btn}>创作者中心</button>

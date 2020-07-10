@@ -3,7 +3,6 @@ import Nav from '../../components/common/nav/nav'
 import ScrollTop from '../../components/common/scrolltop/scrolltop'
 import Head_nav from '../../components/common/head_nav/head_nav'
 import Foot from '../../components/common/foot/foot'
-import Playlistmain from '../../components/playlist/playlist'
 
 export default class Playlist extends React.Component{
     render(){
@@ -12,7 +11,6 @@ export default class Playlist extends React.Component{
                 <Head_nav/>
                 <ScrollTop />
                 {/* <Foot /> */}
-                <Playlistmain />
                </div>
     }
 }

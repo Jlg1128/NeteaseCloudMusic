@@ -3,7 +3,7 @@ import cssobj from './recommend.less'
 import './recommend.less'
 import { HeartOutlined, RightOutlined, LeftOutlined, PlayCircleOutlined, FolderAddOutlined, SketchOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
-import {history} from 'umi'
+import { history } from 'umi'
 
 export default class Recommend extends Component {
     constructor() {
@@ -20,36 +20,49 @@ export default class Recommend extends Component {
     render() {
         const { userloginfo, HotZhubo, dailyRecommendMusic, HotJoinedSinger, NewestAblum, toplisthot, toplistnewest, toplisthotorigin } = this.props
         const { musiclistindex, musiclistindex1, musiclistindex2 } = this.state
-        const {userinfo} = userloginfo
+        const { userinfo } = userloginfo
+        const url = 'http://p1.music.126.net/ma8NC_MpYqC-dK_L81FWXQ==/109951163250233892.jpg'
         //热门推荐
         const dailyRecommend = () => {
-            if (dailyRecommendMusic) {
-                return dailyRecommendMusic.map((item, index) => <li key={index} className={cssobj.musci_link}>
+            if (dailyRecommendMusic.lenth > 0) {
+                return dailyRecommendMusic.map((item, index) => <li onClick={() => history.push(`/song/${item.id}`)} key={index} className={cssobj.musci_link}>
                     <a key={index} href=""><div ><img src={item.picUrl} alt="" /></div></a>
                     <a href=""><h3>{item.name}</h3></a>
                 </li>)
-            } else { return (<h1>Loading..</h1>) }
+            } else { return (<li><img src={url} onClick={() => { history.push('/song/1460930236') }} alt="" /></li>) }
+        }
+        //新碟上架
+        const newAblum = () => {
+            if (NewestAblum.lenth > 0) {
+                return (NewestAblum.map((item, index) => <li onClick={() => history.push(`/ablum/${item.id}`)} key={index}>
+                    <a href=""><div><img src={item.blurPicUrl} alt="" /></div></a>
+                    <a href=""><h3>{item.name}</h3></a>
+                    <a href=""><h3>{item.artist.name}</h3></a>
+                </li>))
+            } else {
+                return (<li><img src={url} onClick={() => { history.push('/ablum/1460930236') }} alt="" /></li>)
+            }
         }
         //入驻歌手
         const joinedsingerfun = () => {
-            if (dailyRecommendMusic) {
-                return HotJoinedSinger.map((item, index) => <div key={index} className={cssobj.zhubolist}><div><img src={item.picUrl} alt="" /></div>
+            if (dailyRecommendMusic.lenth > 0) {
+                return HotJoinedSinger.map((item, index) => <div onClick={() => history.push(`/user/home/${item.accountId}`)} key={index} className={cssobj.zhubolist}><div><img src={item.picUrl} alt="" /></div>
                     <a href=""><h3>{item.name}<SketchOutlined style={{ color: "red" }} /></h3> </a>
                 </div>)
-            } else { return <h1>Loading</h1> }
+            } else { return (<li><img src={url} onClick={() => { history.push('/user/home/1460930236') }} alt="" /></li>) }
         }
-        //入门主播
+        //入驻主播
         const hotzhubolist = () => {
-            if (HotZhubo) {
-                return HotZhubo.map((item, index) => <div key={index} className={cssobj.zhubolist}><div><img style={{ width: 38, height: 38 }} src={item.avatarUrl} alt="" /></div>
+            if (HotZhubo.lenth > 0) {
+                return HotZhubo.map((item, index) => <div onClick={() => history.push(`/user/home/${item.id}`)} key={index} className={cssobj.zhubolist}><div><img style={{ width: 38, height: 38 }} src={item.avatarUrl} alt="" /></div>
                     <a href=""><h3>{item.nickName}<SketchOutlined style={{ color: "red" }} /></h3> </a>
                 </div>)
-            } else { return <h1>Lodinging</h1> }
+            } else { return (<li><img src={url} onClick={() => { history.push('/user/home/1460930236') }} alt="" /></li>) }
         }
         //飙升榜
         const toplisthotlist = () => {
-            if (toplisthot != undefined) {
-                return toplisthot.map((item, index) => <li key={index} onMouseOut={() => { this.setState({ musiclistindex: -1 }) }} onMouseOver={() => { this.setState({ musiclistindex: index + 20 }) }}>
+            if (toplisthot.lenth > 0) {
+                return toplisthot.map((item, index) => <li onClick={() => history.push(`/song/${item.id}`)} key={index} onMouseOut={() => { this.setState({ musiclistindex: -1 }) }} onMouseOver={() => { this.setState({ musiclistindex: index + 20 }) }}>
                     <i className={cssobj.i} style={{ color: (index > 2) ? '' : 'red' }}>{index + 1}</i>
                     <a href="">{item.name}</a>
                     <a href=""><PlayCircleOutlined alt='123' title='嘻嘻' style={{ display: (musiclistindex === index + 20 ? 'block' : 'none') }} className={cssobj.play2} /></a>
@@ -57,13 +70,13 @@ export default class Recommend extends Component {
                 </li>
                 )
             } else {
-                return <span className={cssobj.loading}><h1>loading...</h1></span>
+                return (<li onClick={() => { history.push('/song/1460930236') }} >阿萨德撒大</li>)
             }
         }
         //新歌榜
         const toplistnewestlist = () => {
-            if (toplistnewest != undefined) {
-                return toplistnewest.map((item, index) => <li key={index} onMouseOut={() => { this.setState({ musiclistindex1: -1 }) }} onMouseOver={() => { this.setState({ musiclistindex1: index + 20 }) }}>
+            if (toplistnewest.lenth > 0) {
+                return toplistnewest.map((item, index) => <li onClick={() => history.push(`/song/${item.id}`)} key={index} onMouseOut={() => { this.setState({ musiclistindex1: -1 }) }} onMouseOver={() => { this.setState({ musiclistindex1: index + 20 }) }}>
                     <i className={cssobj.i} style={{ color: (index > 2) ? '' : 'red' }}>{index + 1}</i>
                     <a href="">{item.name}</a>
                     <a href=""><PlayCircleOutlined alt='123' title='嘻嘻' style={{ display: (musiclistindex1 === index + 20 ? 'block' : 'none') }} className={cssobj.play2} /></a>
@@ -71,13 +84,13 @@ export default class Recommend extends Component {
                 </li>
                 )
             } else {
-                return <span className={cssobj.loading}><h1>loading...</h1></span>
+                return (<li onClick={() => { history.push('/song/1460930236') }} ></li>)
             }
         }
         //原创榜
         const toplisthotoriginlist = () => {
-            if (toplisthotorigin != undefined) {
-                return toplisthotorigin.map((item, index) => <li key={index} onMouseOut={() => { this.setState({ musiclistindex2: -1 }) }} onMouseOver={() => { this.setState({ musiclistindex2: index + 20 }) }}>
+            if (toplisthotorigin.lenth > 0) {
+                return toplisthotorigin.map((item, index) => <li onClick={() => history.push(`/song/${item.id}`)} key={index} onMouseOut={() => { this.setState({ musiclistindex2: -1 }) }} onMouseOver={() => { this.setState({ musiclistindex2: index + 20 }) }}>
                     <i className={cssobj.i} style={{ color: (index > 2) ? 'pink' : 'red' }}>{index + 1}</i>
                     <a href="">{item.name}</a>
                     <a href=""><PlayCircleOutlined alt='123' title='嘻嘻' style={{ display: (musiclistindex2 === index + 20 ? 'block' : 'none') }} className={cssobj.play2} /></a>
@@ -85,7 +98,7 @@ export default class Recommend extends Component {
                 </li>
                 )
             } else {
-                return <span className={cssobj.loading}><h1>loading...</h1></span>
+                return (<li onClick={() => { history.push('/song/1460930236') }} ></li>)
             }
         }
         //用户登录按钮以及用户信息显示开关函数
@@ -94,9 +107,9 @@ export default class Recommend extends Component {
                 return (<div><div className={cssobj.avatar}><img style={{ width: 60, height: 60 }} src={userinfo.avatarUrl} alt="" /></div>
                     <p className={cssobj.username}>{userinfo.nickname}</p>
                     <ul className={cssobj.dongtai}>
-            <li style={{cursor:'point'}} onClick={()=>history.push(`/user/event?id=${userinfo.userId}`)}><span><h5>{userinfo.authority}</h5><h4><a href="">动态</a> </h4></span></li>
-            <li style={{cursor:'point'}} onClick={()=>history.push(`/user/follows?id=${userinfo.userId}`)}><span><h5>{userinfo.follows}</h5><h4><a href="">关注</a> </h4></span></li>
-            <li style={{cursor:'point'}} onClick={()=>history.push(`/user/fans?id=${userinfo.userId}`)}><span><h5>{userinfo.followeds}</h5><h4><a href="">粉丝</a> </h4></span></li>
+                        <li style={{ cursor: 'point' }} onClick={() => history.push(`/user/event?id=${userinfo.userId}`)}><span><h5>{userinfo.authority}</h5><h4><a href="">动态</a> </h4></span></li>
+                        <li style={{ cursor: 'point' }} onClick={() => history.push(`/user/follows?id=${userinfo.userId}`)}><span><h5>{userinfo.follows}</h5><h4><a href="">关注</a> </h4></span></li>
+                        <li style={{ cursor: 'point' }} onClick={() => history.push(`/user/fans?id=${userinfo.userId}`)}><span><h5>{userinfo.followeds}</h5><h4><a href="">粉丝</a> </h4></span></li>
                     </ul> </div>)
             } else {
                 return (<div>                        <p>登录网易云音乐，可以享受无线收藏的乐趣，并且无线同步手机</p>
@@ -124,8 +137,8 @@ export default class Recommend extends Component {
                             {dailyRecommend()}
                         </ul>
                     </div>
+                    {/* 新碟上架版块 */}
                     <div className={`${cssobj.musiclist_main} ${cssobj.clearfix}`}>
-
                         <ul className={cssobj.musiclist_nav}>
                             <li><a href=""><h3><HeartOutlined />新碟上架</h3></a></li>
                         </ul>
@@ -133,15 +146,11 @@ export default class Recommend extends Component {
                             <a href=""><LeftOutlined className='arrow lf' /></a>
                             <a href=""><RightOutlined className='arrow ri' /></a>
                             <ul>
-                                {NewestAblum.map((item, index) => <li key={index}>
-                                    <a href=""><div><img src={item.blurPicUrl} alt="" /></div></a>
-                                    <a href=""><h3>{item.name}</h3></a>
-                                    <a href=""><h3>{item.artist.name}</h3></a>
-                                </li>)}
-
+                                {newAblum()}
                             </ul>
                         </div>
                     </div>
+                    {/* //榜单版块 */}
                     <div className={`${cssobj.musiclist_main} ${cssobj.clearfix}`}>
                         <ul className={cssobj.musiclist_nav}>
                             <li><a href=""><h3><HeartOutlined />榜单</h3></a></li>
@@ -177,6 +186,7 @@ export default class Recommend extends Component {
                         </div>
                     </div>
                 </div>
+                //登录
                 <div className={cssobj.reco_singerlist}>
                     <div className={cssobj.singerlist_main}>
                         {denglu()}
@@ -184,7 +194,7 @@ export default class Recommend extends Component {
                     <div className={cssobj.singerinfo_wrap}>
                         <div className={cssobj.joined_singer}>
                             <h3>入驻歌手</h3>
-                            <a onClick={()=>history.push('/discover/artist/signed/')}>
+                            <a onClick={() => history.push('/discover/artist/signed/')}>
                                 <i>查看全部</i>
                                 <RightOutlined />
                             </a>

@@ -1,4 +1,3 @@
-import { getmusicinfo } from '../service/getmock'
 import { getRecommendMusic, getHotJoinedSinger, getHotZhubolist, getNewestAblum, gettoplisthot, gettoplistnewest, gettoplistorigin, getIndexSwiper } from '../service/servers'
 export default {
     namespace: 'recommend',
@@ -14,7 +13,7 @@ export default {
         IndexSwiper: [],
         visible: false,
         registervisible:false,
-        currentindex: 0
+        clickindex: 0
     },
     reducers: {
         //获取首页轮播图
@@ -78,9 +77,9 @@ export default {
             newstate.registervisible = action.payload
             return newstate
         },
-        getindex(state, action) {
+        setclickindex(state, action) {
             const newstate = deepClone(state);
-            newstate.currentindex = action.payload
+            newstate.clickindex = action.payload
             return newstate
         },
     },
