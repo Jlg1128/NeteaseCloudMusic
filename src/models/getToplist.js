@@ -10,6 +10,7 @@ export default{
             getToplist(state,action){
                const newstate = deepClone(state);
                newstate.toplist=action.payload
+
                return newstate
             },
             getranklist(state,action){
@@ -19,7 +20,6 @@ export default{
                 return newstate
              },
             getClickindex(state,action){
-                console.log(action.payload)
                 const newstate = deepClone(state);
                 action.payload?newstate.clickindex=action.payload:newstate.clickindex=state.clickindex
                 return newstate
@@ -28,7 +28,7 @@ export default{
     effects:{
            *getToplistAsync({payload},{call,put}){
                 const result =yield call(getToplist,payload)
- 
+
                 yield put({
                     type:'getToplist',
                     payload:result

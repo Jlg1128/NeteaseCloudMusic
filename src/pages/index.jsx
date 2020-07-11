@@ -11,18 +11,18 @@ import { connect } from 'umi'
 import Cookies from 'js-cookie'
 
 class Index extends React.Component {
-    componentDidMount() {
-        let uid = Cookies.get('uid')
-        // if (uid && !this.props.userloginfo.userlogstatus) {
-        //     this.props.dispatch({
-        //         type: "recommend/AsyncgetDailyRecommendMusic"
-        //     })
-        //     this.props.dispatch({
-        //         type: 'userinfo/dogetuserdetail',
-        //         payload: parseInt(uid)
-        //     })
-        // }
-    }
+    // componentDidMount() {
+    //     let uid = Cookies.get('uid')
+    //     if (uid && !this.props.userloginfo.userlogstatus || this.props.music.IndexSwiper.length<=0) {
+    //         this.props.dispatch({
+    //             type: "recommend/AsyncgetDailyRecommendMusic"
+    //         })
+    //         this.props.dispatch({
+    //             type: 'userinfo/dogetuserdetail',
+    //             payload: parseInt(uid)
+    //         })
+    //     }
+    // }
     render() {
         const { dispatch, userloginfo } = this.props
         const {clickindex} = this.props.music

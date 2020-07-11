@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Alert from '../../common/alert/alert'
 import {Input,Button,Modal,Space } from 'antd'
 import cssobj from './comment.less'
-
+import formatDate from '../../../util/timechange'
 const { TextArea } = Input;
 
 export default class CommentItem extends Component {
@@ -45,28 +45,27 @@ export default class CommentItem extends Component {
   }
   render() {
     const {isalert,visible,loading} = this.state
-    const url = 'http://p1.music.126.net/ma8NC_MpYqC-dK_L81FWXQ==/109951163250233892.jpg'
-    const user = { author: 'jlg', avatar: url, content: "我是真的帅" }
-    const comment = [{ author: 'jlg', avatar: url, content: "我是真的帅" }, { author: '何帆', avatar: url, content: "你是盒饭吗，你真的好好看呢哈哈哈" }]
+    // const url = 'http://p1.music.126.net/ma8NC_MpYqC-dK_L81FWXQ==/109951163250233892.jpg'
+    const {comment} = this.props
+    let timedata = formatDate(comment.time)
     return (
       <div className={`${cssobj.specialcommment} ${cssobj.clearfix}`}>
           <div className={cssobj.comment_ul}>
             <div className={cssobj.comment_avatar}>
-              <img style={{ width: 50, height: 50 }} src={url} alt="" />
+              <img style={{ width: 50, height: 50 }} src={comment.user.avatarUrl} alt="" />
             </div>
             <span className={cssobj.comment_username}>
-              <a style={{ color: 'blue' }} href="">临深时见鹿</a>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;
-                   :asldsakldsakld
+              <a style={{ color: 'blue' }} href="">{comment.user.nickname}</a>&nbsp;:&nbsp;{comment.content}
                </span>
-            <i>昨天10:15</i>
+            <i>{timedata}</i>
             <span className={cssobj.reply}>
-              <img style={{ width: 22, height: 22 }} src="/static/点赞.png" alt="" />
-              <a href="">(245)</a>&nbsp;&nbsp;&nbsp;
+              <img style={{ width: 22, height: 22,cursor:'pointer' }} src="/static/点赞.png" alt="" />
+              <a href="">({comment.likedCount})</a>&nbsp;&nbsp;&nbsp;
                  <a href="javascript:void(0)" onClick={this.setVisible}>回复</a>
             </span>
            </div> 
            <div style={{display:visible?'block':'none'}} className={cssobj.addcomment_wrap}>
-             <TextArea defaultValue={'@小鲸鱼：'} rows={1} className={cssobj.TextArea}/>
+             <TextArea defaultValue={`@${comment.user.nickname}:`} rows={1} className={cssobj.TextArea}/>
              <Button loading={loading} onClick={this.setloading} className={cssobj.submitbtn}>提交</Button>
              {isalert?this.info():''}
            </div>

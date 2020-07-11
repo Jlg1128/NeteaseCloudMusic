@@ -186,7 +186,7 @@ export default class Recommend extends Component {
                         </div>
                     </div>
                 </div>
-                //登录
+                {/* //登录 */}
                 <div className={cssobj.reco_singerlist}>
                     <div className={cssobj.singerlist_main}>
                         {denglu()}

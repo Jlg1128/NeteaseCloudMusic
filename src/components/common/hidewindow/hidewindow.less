@@ -5,6 +5,8 @@
     position: fixed;
     bottom: -50px;
     left: 0;
+    background-color: black;
+    overflow: hidden;
     transition: bottom 0.2s ease-in-out;
 }
 .Hidewindow:hover{
@@ -16,13 +18,38 @@
     background-color: transparent;
 }
 .showwindow{
+    
     height: 50px;
-    background-color: #242424;
+    background-color: blue;
     .musicplay{
-        font-size: 15px;
+        position: absolute;
+        top: 30px;
+        left: 360px;
+        font-size: 35px;
+    }
+    .musicplay:hover{
+        color: white;
+    }
+    .left{
+        position: absolute;
+        top: 35px;
+        left: 330px;
+        font-size: 25px;
+    }
+    .left:hover{
+        color: white;
+    }
+    .right{
+        position: absolute;
+        top: 35px;
+        left: 400px;
+        font-size: 25px;
+    }
+    .right:hover{
+        color: white;
     }
 }
-.font{
-    font-size: 15px;
-    font-family: icomoon;
+
+.active{
+    color: white;
 }

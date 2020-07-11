@@ -3,7 +3,10 @@ import Cookies from 'js-cookie'
 export default {
     namespace: 'userinfo',
     state: {
-        userinfo: {},
+        userinfo: {
+            avatarUrl:'',
+            nickname:'默认用户'
+        },
         userlogstatus:false,
         userdetail:{}
     },

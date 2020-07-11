@@ -11,7 +11,7 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
       <TextArea rows={4} onChange={onChange} value={value} />
     </Form.Item>
     <Form.Item>
-      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
+      <Button style={{float:'right',marginRight:50}} htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
         评论
       </Button>
     </Form.Item>
@@ -56,17 +56,15 @@ export default class Addcomment extends React.Component {
 
   render() {
     const {  submitting, value,visible } = this.state;
-    const {user} = this.props
-    console.log( this.props);
-    
+    const {avatar,username} = this.props
     return (
         <div>
           <Alert visible={visible} />
         <Comment
           avatar={
             <Avatar
-              src={user.avatar}
-              alt={user.name}
+              src={avatar}
+              alt={username}
             />
           }
           content={
