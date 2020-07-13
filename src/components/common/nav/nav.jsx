@@ -55,33 +55,34 @@ export default class Nav extends React.Component {
             }
     }
     componentWillReceiveProps(nextProps){
-        if(nextProps){
+        if(nextProps.alert){
             this.setState({
                 alert:nextProps.alert
             })
         }
     }
     render() {
+        console.log(this.state.alert);
         const alertshow = ()=>{
             if( Object.keys(this.state.alert).length>0){
                 if(this.state.alert.albums){
                    var  albumslist = this.state.alert.albums.map((item,index)=>{
-                      return <li value={this.state.keywords} onClick={()=>history.push(`/album/${item.id}`),this.setState({keywords:''})} key={index}>专辑--{item.name}--{item.artist.name}</li>
+                      return <li  onClick={()=>(history.push(`/album/${item.id}`,this.setState({keywords:''})))} key={index}>专辑--{item.name}--{item.artist.name}</li>
                     })
                 }
                  if(this.state.alert.artists){
                     var  artistslist = this.state.alert.artists.map((item,index)=>{
-                        return <li onClick={()=>history.push(`/artist/${item.id}`)} key={index}>歌手--{item.name}</li>
+                        return <li onClick={()=>(history.push(`/artist/${item.id}`,this.setState({keywords:''})))} key={index}>歌手--{item.name}</li>
                       })
                 }
                  if(this.state.alert.playlists){
                     var  playlistslist = this.state.alert.playlists.map((item,index)=>{
-                        return <li onClick={()=>history.push(`/playlist/${item.id}`)} key={index}>歌单--{item.name}</li>
+                        return <li onClick={()=>(history.push(`/playlist/${item.id}`),this.setState({keywords:''}))} key={index}>歌单--{item.name}</li>
                       })
                 }
                 if(this.state.alert.songs){
                     var  songslist  = this.state.alert.songs.map((item,index)=>{
-                        return <li onClick={()=>history.push(`/song/${item.id}`)} key={index}>单曲--{item.name}</li>
+                        return <li onClick={()=>(history.push(`/song/${item.id}`),this.setState({keywords:''}))} key={index}>单曲--{item.name}</li>
                       })
                 }
             }
@@ -128,7 +129,7 @@ export default class Nav extends React.Component {
                 {list.map((item, index) => {
                     if (index < 3) {
                         return (
-                            <li key={index}><a className='link' style={{ backgroundColor: (item.path === history.location.pathname) ? 'black' : '' }} onClick={() => this.setclick(item.path)} >{item.title}</a></li>
+                            <li key={index}><a className='link' style={{ backgroundColor: (item.path === history.location.pathname) ? 'black' : '' }}>{item.title}</a></li>
                         )
                     } else {
                         return (
@@ -137,7 +138,7 @@ export default class Nav extends React.Component {
                     }
                 })}
 
-                <Search placeholder="音乐/视频/电台/用户" allowClear='true' className={cssobj.nav_search} onChange={(e)=>this.handleChange(e.currentTarget.value)} onSearch={()=>{}} />
+                <Search placeholder="音乐/视频/电台/用户" allowClear='true' value={this.state.keywords} className={cssobj.nav_search} onChange={(e)=>this.handleChange(e.currentTarget.value)} onSearch={()=>{}} />
                 <div style={{display:this.state.keywords?'block':"none"}} className={cssobj.search_info}>
                      <ul>
                          {alertshow().map(item=>item)}

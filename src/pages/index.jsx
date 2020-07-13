@@ -12,17 +12,17 @@ import Cookies from 'js-cookie'
 class Index extends React.Component {
     componentDidMount() {
         let uid = Cookies.get('uid')
-        // if (uid && !this.props.userloginfo.userlogstatus ) {
-        //     this.props.dispatch({
-        //         type: 'userinfo/dogetuserdetail',
-        //         payload: parseInt(uid)
-        //     })
-        // }
-        // if(this.props.music.IndexSwiper.length<=0){
-        //     this.props.dispatch({
-        //         type: "recommend/AsyncgetDailyRecommendMusic"
-        //     })
-        // }
+        if (uid && !this.props.userloginfo.userlogstatus ) {
+            this.props.dispatch({
+                type: 'userinfo/dogetuserdetail',
+                payload: parseInt(uid)
+            })
+        }
+        if(this.props.music.IndexSwiper.length<=0){
+            this.props.dispatch({
+                type: "recommend/AsyncgetDailyRecommendMusic"
+            })
+        }
     }
     render() {
         const { dispatch, userloginfo } = this.props

@@ -35,7 +35,6 @@ class Songinfo extends Component {
     componentDidMount() {
         var currenuserid = Cookies.get('uid')
         //判断用户状态
-        alert('1')
         if (currenuserid && !this.props.userinfo.userId) {
             this.props.dispatch({   
                 type: 'userinfo/dogetuserdetail',

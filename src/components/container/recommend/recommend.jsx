@@ -24,7 +24,7 @@ export default class Recommend extends Component {
         const url = 'http://p1.music.126.net/ma8NC_MpYqC-dK_L81FWXQ==/109951163250233892.jpg'
         //热门推荐
         const dailyRecommend = () => {
-            if (dailyRecommendMusic.lenth > 0) {
+            if (dailyRecommendMusic.length > 0) {
                 return dailyRecommendMusic.map((item, index) => <li onClick={() => history.push(`/song/${item.id}`)} key={index} className={cssobj.musci_link}>
                     <a key={index} href=""><div ><img src={item.picUrl} alt="" /></div></a>
                     <a href=""><h3>{item.name}</h3></a>
@@ -33,7 +33,7 @@ export default class Recommend extends Component {
         }
         //新碟上架
         const newAblum = () => {
-            if (NewestAblum.lenth > 0) {
+            if (NewestAblum.length > 0) {
                 return (NewestAblum.map((item, index) => <li onClick={() => history.push(`/ablum/${item.id}`)} key={index}>
                     <a href=""><div><img src={item.blurPicUrl} alt="" /></div></a>
                     <a href=""><h3>{item.name}</h3></a>
@@ -45,7 +45,7 @@ export default class Recommend extends Component {
         }
         //入驻歌手
         const joinedsingerfun = () => {
-            if (dailyRecommendMusic.lenth > 0) {
+            if (dailyRecommendMusic.length > 0) {
                 return HotJoinedSinger.map((item, index) => <div onClick={() => history.push(`/user/home/${item.accountId}`)} key={index} className={cssobj.zhubolist}><div><img src={item.picUrl} alt="" /></div>
                     <a href=""><h3>{item.name}<SketchOutlined style={{ color: "red" }} /></h3> </a>
                 </div>)
@@ -53,7 +53,7 @@ export default class Recommend extends Component {
         }
         //入驻主播
         const hotzhubolist = () => {
-            if (HotZhubo.lenth > 0) {
+            if (HotZhubo.length > 0) {
                 return HotZhubo.map((item, index) => <div onClick={() => history.push(`/user/home/${item.id}`)} key={index} className={cssobj.zhubolist}><div><img style={{ width: 38, height: 38 }} src={item.avatarUrl} alt="" /></div>
                     <a href=""><h3>{item.nickName}<SketchOutlined style={{ color: "red" }} /></h3> </a>
                 </div>)
@@ -61,7 +61,7 @@ export default class Recommend extends Component {
         }
         //飙升榜
         const toplisthotlist = () => {
-            if (toplisthot.lenth > 0) {
+            if (toplisthot.length > 0) {
                 return toplisthot.map((item, index) => <li onClick={() => history.push(`/song/${item.id}`)} key={index} onMouseOut={() => { this.setState({ musiclistindex: -1 }) }} onMouseOver={() => { this.setState({ musiclistindex: index + 20 }) }}>
                     <i className={cssobj.i} style={{ color: (index > 2) ? '' : 'red' }}>{index + 1}</i>
                     <a href="">{item.name}</a>
@@ -75,7 +75,7 @@ export default class Recommend extends Component {
         }
         //新歌榜
         const toplistnewestlist = () => {
-            if (toplistnewest.lenth > 0) {
+            if (toplistnewest.length > 0) {
                 return toplistnewest.map((item, index) => <li onClick={() => history.push(`/song/${item.id}`)} key={index} onMouseOut={() => { this.setState({ musiclistindex1: -1 }) }} onMouseOver={() => { this.setState({ musiclistindex1: index + 20 }) }}>
                     <i className={cssobj.i} style={{ color: (index > 2) ? '' : 'red' }}>{index + 1}</i>
                     <a href="">{item.name}</a>
@@ -89,7 +89,7 @@ export default class Recommend extends Component {
         }
         //原创榜
         const toplisthotoriginlist = () => {
-            if (toplisthotorigin.lenth > 0) {
+            if (toplisthotorigin.length > 0) {
                 return toplisthotorigin.map((item, index) => <li onClick={() => history.push(`/song/${item.id}`)} key={index} onMouseOut={() => { this.setState({ musiclistindex2: -1 }) }} onMouseOver={() => { this.setState({ musiclistindex2: index + 20 }) }}>
                     <i className={cssobj.i} style={{ color: (index > 2) ? 'pink' : 'red' }}>{index + 1}</i>
                     <a href="">{item.name}</a>
