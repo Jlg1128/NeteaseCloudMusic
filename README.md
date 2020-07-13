@@ -1,15 +1,20 @@
-# umi project
-
-## Getting Started
-
-Install dependencies,
-
-```bash
-$ yarn
+### 1.前台
+```
+git clone https://github.com/Jlg1128/NeteaseCloudMusic.git
 ```
 
-Start the dev server,
+```
+npm install 
+```
 
-```bash
-$ yarn start
+```
+npm run start
+```
+
+### 2.后台
+```
+git clone https://github.com/Jlg1128/NeteaseCloudMusicApi.git
+```
+```
+node app.js
 ```
