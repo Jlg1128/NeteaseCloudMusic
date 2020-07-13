@@ -1,36 +1,38 @@
 import React,{Component} from 'react'
 import cssobj from './head_nav.less'
-import './head_nav.less'
-import {Link} from 'umi'
-import {connect} from 'umi'
+import {history} from 'umi'
 
-class Head_nav extends Component{
-    // setIndex=(e)=>{
-    //     const {index} =  e.currentTarget.dataset 
-    //     const newindex = parseInt(index)
-
-    //     this.props.dispatch({   
-    //         type:"recommend/getindex",
-    //         payload:newindex
-    //     })
-    // }
+export default class Head_nav extends Component{
+    state={
+        isrender:false,
+        list:[
+            {path:'/discover',title:'推荐'},
+            {path:'/discover/toplist',title:'排行榜'},
+            {path:'/discover/playlist',title:'歌单'},
+            {path:'/discover/djradio',title:'主播电台'},
+            {path:'/discover/artist',title:'歌手'},
+            {path:'/discover/album',title:'新碟上架'},
+        ]
+    }
+    handleClick=(path)=>{
+        history.push(path)
+    }
+    componentWillReceiveProps(){
+        this.setState({
+            isrender:!this.state.isrender
+        })
+    }
     render(){
-        const {clickIndex} = this.props
-        return <div> <div className={cssobj.haed_nav}>
+        const {list} = this.state
+        return <div> 
+            <div className={cssobj.haed_nav}>
              <ul className={cssobj.haed_nav_ul}>
-                 <li><Link onClick={this.setIndex} data-index={0}  to='/discover' className={cssobj.haed_nav_link} style={{backgroundColor:(clickIndex===0)?'#242424':''}} >推荐</Link></li>
-                 <li><Link onClick={this.setIndex} data-index={1}  to='/discover/toplist/123' className={cssobj.haed_nav_link} style={{backgroundColor:(clickIndex===1)?'#242424':''}}>排行榜</Link></li>
-                 <li><Link onClick={this.setIndex} data-index={2}  to='/discover/playlist' className={cssobj.haed_nav_link} style={{backgroundColor:(clickIndex===2)?'#242424':''}} >歌单</Link></li>
-                 <li><Link onClick={this.setIndex} data-index={3}  to='discover/djradio' className={cssobj.haed_nav_link} style={{backgroundColor:(clickIndex===3)?'#242424':''}} >主播电台</Link></li>
-                 <li><Link onClick={this.setIndex} data-index={4}  to='discover/artist' className={cssobj.haed_nav_link} style={{backgroundColor:(clickIndex===4)?'#242424':''}} >歌手</Link></li>
-                 <li><Link onClick={this.setIndex} data-index={5}  to='/discover/album' className={cssobj.haed_nav_link}  style={{backgroundColor:(clickIndex===5)?'#242424':''}} >新碟上架</Link></li>
+                 {list.map((item,index)=>{
+                     return (<li key={index}><span onClick={()=>this.handleClick(item.path)} className={cssobj.haed_nav_link} style={{backgroundColor:(item.path===history.location.pathname)?'#242424':''}} >{item.title}</span></li>)
+                 })}
              </ul>
         </div>
-        <div className={cssobj.div2}></div>
+
         </div>
     }
 }
-function mapStateToProps(state){
-    return {currentindex:state}
-}
-export default connect(mapStateToProps)(Head_nav)

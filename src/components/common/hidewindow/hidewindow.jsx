@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import cssobj from './hidewindow.less'
-import { PlayCircleOutlined, LeftCircleOutlined, RightCircleOutlined, PauseCircleOutlined } from '@ant-design/icons'
+import { UnorderedListOutlined,PlayCircleOutlined, LeftCircleOutlined, RightCircleOutlined, PauseCircleOutlined } from '@ant-design/icons'
 import './hidewindow.less'
 
 export default class Hidewindow extends Component {
@@ -8,66 +8,103 @@ export default class Hidewindow extends Component {
         super()
         this.state = {
             bottom: -50,
-            playChecked: false,
-            leftChecked: false,
-            rightChecked: false,
+            playlistshow:false,
+            isrender:false
         }
     }
-    setBottom = (e) => {
-        this.setState({ isEntered: true })
-    }
-    backbottom = () => {
-        this.setState({ isEntered: false })
-    }
-    setleftChecked = () => {
-        this.setState({
-            leftChecked: !this.state.leftChecked,
-            playChecked: false,
-            rightChecked: false
-        })
-        console.log(audio);
-        if(audio.paused){
-            audio.play()
-        }
-    }
-    setplayChecked = () => {
-  
-        if(audio.played){
-            audio.pause()
+    play = ()=>{
+        audio.play()
+        setTimeout(() => {
+    
+            this.setState({
+                isrender:!this.state.isrender
+            })
+        }, 0);
 
-        }
-        console.log('ok');
+    }
+    pause = ()=>{
+        setTimeout(() => {
+            this.setState({
+                isrender:!this.state.isrender
+            })
+        }, 0);
+        audio.pause()
 
-        this.setState({
-            playChecked: !this.state.playChecked,
-            leftChecked: false,
-            rightChecked: false,
-        })
     }
-    setrightChecked = () => {
+    showplaylist = ()=>{
         this.setState({
-            rightChecked: !this.state.rightChecked,
-            leftChecked: false,
-            playChecked: false,
-        })
+            playlistshow:!this.state.playlistshow
+           })
     }
-    componentDidMount(){}
+    showplaylistEnter = ()=>{
+        this.setState({
+            playlistshow:true
+           })
+    }
+    showplaylistLeave = ()=>{
+        this.setState({
+            playlistshow:false
+           })
+    }
+    componentWillReceiveProps(){
+        if(this.timer2){
+            clearTimeout(this.timer2)
+        }
+       this.timer2 = setTimeout(() => {
+        this.setState({
+            isrender:!this.state.isrender
+        })
+        }, 800);
+    }
+   playmusic = (targetid)=>{    
+       if(this.props.likelist.length<=0){
+        this.props.dispatch({
+            type:"songabout/getMusicInfoAsync",
+            payload:targetid
+        })
+       }
+   }
     render() {
-        const { leftChecked, playChecked, rightChecked } = this.state
-
-        let url ='http://m7.music.126.net/20200711112326/3b25e5eb6aefd0a71a929fc67c25676c/ymusic/obj/w5zDlMODwrDDiGjCn8Ky/3142653095/f081/5df2/ba73/04f7fbc83e0dd515eb020a151444cc6c.mp3'
-        return <div className={cssobj.Hidewindow}>
+        const {songurl,songname,singername,picUrl,likelist} = this.props
+        const { bottom,playlistshow} = this.state
+        const playbtn = this.audio&&this.audio.paused?<PlayCircleOutlined onClick={this.play} className={cssobj.musicplay} />:<PauseCircleOutlined onClick={this.pause} className={cssobj.musicplay} />
+        return <div style={{bottom:`${bottom}`}} className={cssobj.Hidewindow}>
             <div className={cssobj.trandiv}></div>
+            <div style={{display:playlistshow?'block':"none"}} onMouseOver={this.showplaylistEnter} onMouseOut={this.showplaylistLeave}  className={`${cssobj.playlist} clearfix`}>
+                <div className={cssobj.title}>
+                    <span>播放列表({likelist?likelist.length:0})</span>
+                </div>
+                <ul>
+                    {likelist?likelist.map((item,index)=>{
+                        return (
+                            <li key={index} onClick={()=> this.playmusic(item.id)}>
+                            <span className={cssobj.songname}>{item.name}</span>
+                        <span className={cssobj.singer}>{item.ar[0].name}</span>
+                            <span className={cssobj.time}>02.20</span>
+                        </li>
+                        )
+                    }):<div>Loading</div>}
+
+                </ul>
+            </div>
             <div className={cssobj.showwindow}  >
-                <LeftCircleOutlined style={{ color: leftChecked ? 'white' : '' }} className={cssobj.left} />
-                {/* <PlayCircleOutlined style={{ color: audio.played ? 'white' : '' }} onClick={()=>audio.play()} className={cssobj.musicplay} /> */}
-                <RightCircleOutlined style={{ color: rightChecked ? 'white' : '' }} className={cssobj.right} />
-                <PauseCircleOutlined />
-                <audio id='audio' src={url} loop>歌曲</audio>
-                {/* <i className='font'></i> */}
+                <div className={cssobj.avatar}>
+                    <img style={{width:40,height:40}} src={picUrl} alt=""/>
+                </div>
+                <div className={cssobj.songinfo}>
+                     <span><a href="">{songname}</a></span>
+                     <a href="">{singername}</a>
+                </div>
+                <LeftCircleOutlined className={cssobj.left} />
+                {playbtn}
+                {/* <PlayCircleOutlined onClick={this.play} className={cssobj.musicplay} />
+                <PauseCircleOutlined onClick={this.pause} className={cssobj.musicpause} /> */}
+                <RightCircleOutlined  className={cssobj.right} />
+                <audio id='audio' ref={audio=>this.audio = audio} src={songurl} loop>歌曲</audio>
+                <UnorderedListOutlined className={cssobj.btn} onClick={this.showplaylist}></UnorderedListOutlined>
             </div>
 
-        </div>
+        </div>  
     }
 
 }   

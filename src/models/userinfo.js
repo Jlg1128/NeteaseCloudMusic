@@ -1,4 +1,4 @@
-import { userlog, getuserlogstatus,userdetail } from '../service/servers'
+import { userlog, getuserlogstatus,userdetail,handelSearch } from '../service/servers'
 import Cookies from 'js-cookie'
 export default {
     namespace: 'userinfo',
@@ -8,7 +8,9 @@ export default {
             nickname:'默认用户'
         },
         userlogstatus:false,
-        userdetail:{}
+        userdetail:{},
+        searchSuggest:[],
+        alert:{}
     },
     reducers: {
 
@@ -30,20 +32,45 @@ export default {
             newstate.userdetail = action.payload
             return newstate
         },
+        //退出
+        quit(state,action){
+            const newstate = deepClone(state);
+            Cookies.remove('uid')
+            newstate.userlogstatus=false
+            newstate.userinfo={
+                avatarUrl:'',
+                nickname:'默认用户'
+            }
+            return newstate
+        },
         //用户登录状态信息
         logstatus(state, action) {
             const newstate = deepClone(state);
             newstate.userlogstatus = action.payload
-
-            
             return newstate
         },
+        //搜索关键字提示
+        showKeywordsAlert(state, action) {
+            const newstate = deepClone(state);
+            newstate.alert = action.payload
+            return newstate
+        }
     },
     effects: {
+        //搜索关键字提示
+        *showKeywordsAlertAsync({ payload }, { call, put }) {
+            const result = yield call(handelSearch, payload)
+            if(result){
+                yield put({
+                    type:"showKeywordsAlert",
+                    payload:result
+                })
+            }
+        },
         //用户登录
         *dolog({ payload }, { call, put }) {
             const result = yield call(userlog, payload)
-            if(result.code!=200){
+            if(!result){
                alert('用户名或密码错误')
             }else{
                 //将id设置为cookie

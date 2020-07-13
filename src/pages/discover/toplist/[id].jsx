@@ -13,10 +13,6 @@ class Toplist extends React.Component{
         const {clickindex} = this.props.listinfo
 
         return <div>
-                <Nav/>
-
-                <Head_nav clickIndex={1}/>
-      
                 {/* <Foot /> */}
                 <TopItem toplist={this.props.listinfo.toplist[0]} clickIndex={clickindex} dispatch={this.props.dispatch}  />
                 <Topitemshow />

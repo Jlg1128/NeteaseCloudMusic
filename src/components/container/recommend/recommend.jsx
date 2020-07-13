@@ -70,7 +70,7 @@ export default class Recommend extends Component {
                 </li>
                 )
             } else {
-                return (<li onClick={() => { history.push('/song/1460930236') }} >阿萨德撒大</li>)
+                return (<li onClick={() => { history.push('/song/1460930236') }} >loading</li>)
             }
         }
         //新歌榜

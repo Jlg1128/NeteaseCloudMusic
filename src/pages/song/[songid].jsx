@@ -1,65 +1,63 @@
 import React, { Component } from 'react'
-import parseLRC from '../../util/util'
+import {parseLRC} from '../../util/util'
 import { connect } from 'umi'
 import Cookies from 'js-cookie'
-import Nav from '../../components/common/nav/nav'
-import Head_nav from '../../components/common/head_nav/head_nav'
 import Comment from '../../components/container/comment/comment'
 import AddComment from '../../components/container/addcomment/addcomment'
-
+import HideWindow from '../../components/common/hidewindow/hidewindow'
 import { Button } from 'antd'
 import { PlayCircleOutlined, FolderAddOutlined } from '@ant-design/icons'
 import cssobj from './song.less'
-import userinfo from '../../models/userinfo'
 
 class Songinfo extends Component {
     state = {
-        isdropdown: false
+        isdropdown: false,
+        musicid:this.props.match.params.songid
     }
     exchangeDropdown = () => {
         this.setState({
             isdropdown: !this.state.isdropdown
         })
     }
-    // componentDidMount() {
-    //     var musicid = this.props.match.params.songid
-    //     var currenuserid = Cookies.get('uid')
-    //     //判断用户状态
-    //     if (currenuserid && !this.props.userinfo.userId) {
-    //         this.props.dispatch({
-    //             type: 'userinfo/dogetuserdetail',
-    //             payload: parseInt(currenuserid)
-    //         })
-    //     }
-    //     if (this.props.songabout.comments.length === 0) {
-    //         console.log(this.props.songabout.comments.length);
-    //         // //歌曲信息
-    //         this.props.dispatch({
-    //             type: "songabout/getMusicInfoAsync",
-    //             payload: musicid
-    //         })
-    //         // 获取歌词
-    //         this.props.dispatch({
-    //             type: "songabout/getLyricsAsync",
-    //             payload: musicid
-    //         })
-    //         //获取评论
-    //         this.props.dispatch({
-    //             type: "songabout/getCommentsAsync",
-    //             payload: musicid
-    //         })
-    //         //获取相似歌曲     
-    //         this.props.dispatch({
-    //             type: "songabout/getSimilarMusicAsync",
-    //             payload: musicid
-    //         })
-    //     }
-    // }
+    clickMusic = (targetid)=>{
+        this.props.dispatch({
+            type:"songabout/getMusicInfoAsync",
+            payload:targetid
+        })
+        audio.pause()
+        if(this.timer){
+            clearTimeout(this.timer)
+        }
+       this.timer =  setTimeout(() => {
+            audio.play()
+        }, 500);
+    }
+    componentDidMount() {
+        var currenuserid = Cookies.get('uid')
+        //判断用户状态
+        alert('1')
+        if (currenuserid && !this.props.userinfo.userId) {
+            this.props.dispatch({   
+                type: 'userinfo/dogetuserdetail',
+                payload: parseInt(currenuserid)
+            })
+        }
+            this.props.dispatch({
+                type:"songabout/getMusicInfoAsync",
+                payload:this.props.match.params.songid
+            })
+            //获取歌曲相关信息
+            this.props.dispatch({
+                type:"songabout/getMusicAbout",
+                payload:{musicid:this.props.match.params.songid,currenuserid}
+            })
+    }   
+
     render() {
-        const { songabout, dispatch, clickindex, userinfo } = this.props
-        const { lyrics, comments, musicInfo, similarMusic } = songabout
+        const { songabout, dispatch, userinfo } = this.props
+        const { lyrics, comments, musicInfo, similarMusic,commentsLength ,likelist} = songabout
         let lrc = parseLRC(lyrics)
-        const { isdropdown } = this.state
+        const { isdropdown,musicid } = this.state
         const iconchange = isdropdown ? (<i className={cssobj.font}></i>) : (<i className={cssobj.font}></i>)
         const addcommentModule = comments.length > 0 ? <AddComment avatar={userinfo.avatarUrl} username={userinfo.nickname} /> : ''
         let commentsModule = comments.length > 0 ? comments.map((item, index) => {
@@ -67,8 +65,7 @@ class Songinfo extends Component {
         }) : <div>Loding.....</div>
         return (
             <div>
-                <Nav clickindx={clickindex} dispatch={dispatch}></Nav>
-                <Head_nav></Head_nav>
+                <HideWindow dispatch={dispatch} likelist={likelist} songurl={musicInfo.songurl} picUrl={musicInfo.picUrl} songname={musicInfo.songname} singername={musicInfo.singername} />
                 <div className={`${cssobj.outside_wrap} ${cssobj.clearfix}`}>
                     <div className={`${cssobj.main_wrap}`}>
                         {/* 歌曲详情 */}
@@ -88,7 +85,7 @@ class Songinfo extends Component {
                                         <div>&nbsp;&nbsp;歌手:<a style={{ color: 'blue' }} href="">&nbsp;&nbsp;{musicInfo.singername}</a></div>
                                         <div>&nbsp;&nbsp;所属专辑:<a style={{ color: 'blue' }} href="">&nbsp;&nbsp;{musicInfo.albmunname}</a></div>
                                         <div className={cssobj.btns}>
-                                            <Button type='primary' style={cssobj.Button} >播放 </Button >
+                                            <Button onClick={()=>this.clickMusic(musicid)} type='primary' style={cssobj.Button} >播放 </Button >
                                             <Button style={cssobj.Button}>下载</Button>
                                             <Button style={cssobj.Button}>收藏</Button>
                                             <Button style={cssobj.Button}>分享</Button>
@@ -97,18 +94,18 @@ class Songinfo extends Component {
                                     {/* 歌词模块*/}
                                     <div className={`${cssobj.lyrics} `}>
                                         <div className={cssobj.lyrics_singer}>
-                                            {lrc.slice(0, 5).map(item => {
-                                                return <p>{item}</p>
+                                            {lrc.slice(0, 5).map((item,index) => {
+                                                return <p key={index}>{item}</p>
                                             })}
                                         </div>
                                         <div className={cssobj.lyrics_showed}>
-                                            {lrc.slice(5, 17).map(item => {
-                                                return <p>{item}</p>
+                                            {lrc.slice(5, 12).map((item,index )=> {
+                                                return <p key={index}>{item}</p>
                                             })}
                                         </div>
                                         <div className={cssobj.lyrics_hide} style={{ display: isdropdown ? 'block' : 'none' }}>
-                                            {lrc.slice(17).map(item => {
-                                                return <p>{item}</p>
+                                            {lrc.slice(12).map((item,index) => {
+                                                return <p key={index}>{item}</p>
                                             })}
                                         </div>
                                         <div className={cssobj.show}><a style={{ color: 'blue' }} onClick={() => this.exchangeDropdown()} >{iconchange}展开</a></div>
@@ -118,7 +115,7 @@ class Songinfo extends Component {
                             <div className={`${cssobj.comment_wrap} ${cssobj.clearfix}`}>
                                 <div>
                                     <span style={{ fontSize: 20, paddingRight: 10, paddingLeft: 5 }}>评论</span>
-                                    <i style={{ paddingBottom: 3 }}>共32132条评论</i></div>
+                                        <i style={{ paddingBottom: 3 }}>共{commentsLength}条评论</i></div>
                                 <div className={cssobj.redline}></div>
                                 {addcommentModule}
                                 <h3 style={{ fontWeight: 'bolder', marginLeft: 5 }}> 精彩评论</h3>
@@ -134,15 +131,15 @@ class Songinfo extends Component {
                                 <div style={{ height: 1, backgroundColor: 'black' }}></div>
                                 <ul>
 
-                                    {similarMusic.map(item => {
+                                    {similarMusic.map((item,index) => {
                                         return (
-                                            <li>
+                                            <li key={index}>
                                                 <span className={cssobj.li_songname}>
                                                     <h4> <a href="">{item.name}</a></h4>
-                                                    <a href="">{item.artists[0].name}</a>
+                                                    <a style={{color:'gray'}} href="">{item.artists[0].name}</a>
                                                 </span>
                                                 <span className={cssobj.li_singername}>
-                                                    <PlayCircleOutlined className={cssobj.play} style={{ fontSize: 20 }} />
+                                                    <PlayCircleOutlined onClick={()=>this.clickMusic(item.id)} className={cssobj.play} style={{ fontSize: 20 }} />
                                                     <FolderAddOutlined className={cssobj.play} style={{ fontSize: 20 }} />
                                                 </span>
                                             </li>

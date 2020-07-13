@@ -1,4 +1,4 @@
-import { getRecommendMusic, getHotJoinedSinger, getHotZhubolist, getNewestAblum, gettoplisthot, gettoplistnewest, gettoplistorigin, getIndexSwiper } from '../service/servers'
+import {getRecommendMusicInfo} from '../service/servers'
 export default {
     namespace: 'recommend',
     state: {
@@ -16,52 +16,18 @@ export default {
         clickindex: 0
     },
     reducers: {
-        //获取首页轮播图
-        getindexswiper(state, action) {
+        getRecommendMusicInfo(state,action){
             const newstate = deepClone(state)
-            newstate.IndexSwiper = [...action.payload]
-            return newstate
-        },
-        //首页推荐音乐
-        getDailyRecommendMusic(state, action) {
-            const newstate = deepClone(state)
-            newstate.dailyrecommendmusic = [...action.payload]
-            return newstate
-        },
-        //获取入住热门歌手
-        getHotJoinedSinger(state, action) {
-            const newstate = deepClone(state)
-            newstate.HotJoinedSinger = [...action.payload]
-            return newstate
-        },
-        //获取热门主播
-        getHotZhubo(state, action) {
-            const newstate = deepClone(state)
-            newstate.HotZhubo = [...action.payload]
-            return newstate
-        },
-        //获取新碟上架
-        getNewestAblum(state, action) {
-            const newstate = deepClone(state)
-            newstate.NewestAblum = [...action.payload]
-            return newstate
-        },
-        //获取飙升榜
-        gettoplisthot(state, action) {
-            const newstate = deepClone(state)
-            newstate.toplisthot = [...action.payload]
-            return newstate
-        },
-        //获取新歌榜
-        gettoplistnewest(state, action) {
-            const newstate = deepClone(state)
-            newstate.toplistnewest = [...action.payload]
-            return newstate
-        },
-        //获取原创榜
-        gettoplisthotorigin(state, action) {
-            const newstate = deepClone(state)
-            newstate.toplisthotorigin = [...action.payload]
+            const result = action.payload
+            newstate.IndexSwiper = [...result.IndexSwiper]
+            newstate.dailyrecommendmusic = [...result.dailyrecommendmusic]
+            newstate.HotJoinedSinger = [...result.HotJoinedSinger]
+            newstate.HotZhubo = [...result.HotZhubo]
+            newstate.NewestAblum = [...result.NewestAblum]
+            newstate.toplisthot = [...result.toplisthot]
+            newstate.toplistnewest = [...result.toplistnewest]
+            newstate.toplisthotorigin = [...result.toplisthotorigin]
+            
             return newstate
         },
         //设置登录方式弹窗
@@ -86,46 +52,13 @@ export default {
     effects: {
         //获取首页推荐音乐
         *AsyncgetDailyRecommendMusic({ payload }, { call, put }) {
-            const resultindexswiper = yield call(getIndexSwiper, payload)
-            const resultrec = yield call(getRecommendMusic, payload)
-            const resulthotjoined = yield call(getHotJoinedSinger, payload)
-            const resulthotzhubo = yield call(getHotZhubolist, payload)
-            const resultnewestAblum = yield call(getNewestAblum, payload)
-            const resulttoplisthot = yield call(gettoplisthot, payload)
-            const resulttoplistnewest = yield call(gettoplistnewest, payload)
-            const resulttoplistorigin = yield call(gettoplistorigin, payload)
-            yield put({
-                type: 'getindexswiper',
-                payload: resultindexswiper.banners
-            })
-            yield put({
-                type: 'getDailyRecommendMusic',
-                payload: resultrec.result.slice(0, 8)
-            })
-            yield put({
-                type: 'getHotJoinedSinger',
-                payload: resulthotjoined.artists
-            })
-            yield put({
-                type: 'getHotZhubo',
-                payload: resulthotzhubo.data.list
-            })
-            yield put({
-                type: 'getNewestAblum',
-                payload: resultnewestAblum.albums
-            })
-            yield put({
-                type: 'gettoplisthot',
-                payload: resulttoplisthot.playlist.tracks.slice(0, 10)
-            })
-            yield put({
-                type: 'gettoplistnewest',
-                payload: resulttoplistnewest.playlist.tracks.slice(0, 10)
-            })
-            yield put({
-                type: 'gettoplisthotorigin',
-                payload: resulttoplistorigin.playlist.tracks.slice(0, 10)
-            })
+            const result = yield call(getRecommendMusicInfo,payload)
+            if(result){
+                yield put({
+                    type:"getRecommendMusicInfo",
+                    payload:result
+                })
+            }
         },
     }
 }

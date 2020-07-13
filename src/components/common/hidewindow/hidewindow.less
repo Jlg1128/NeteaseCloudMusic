@@ -5,8 +5,7 @@
     position: fixed;
     bottom: -50px;
     left: 0;
-    background-color: black;
-    overflow: hidden;
+    z-index: 5;
     transition: bottom 0.2s ease-in-out;
 }
 .Hidewindow:hover{
@@ -18,17 +17,42 @@
     background-color: transparent;
 }
 .showwindow{
-    
     height: 50px;
-    background-color: blue;
+    background-color: #2f2f2f;
     .musicplay{
         position: absolute;
         top: 30px;
         left: 360px;
         font-size: 35px;
-    }
-    .musicplay:hover{
         color: white;
+    }
+    .musicpause{
+        position: absolute;
+        top: 30px;
+        left: 450px;
+        font-size: 35px;
+        color: white;
+    }
+    .avatar{
+        position: absolute;
+        top: 25px;
+        left: 500px;
+        font-size: 25px;
+    }
+    .songinfo{
+        position: absolute;
+        left: 550px;
+        margin-top: 10px;
+        span{
+            font-size: 15px;
+          a{
+            color: red;
+          }
+        }
+        a{
+            color: white;
+            padding-left: 15px;
+        }
     }
     .left{
         position: absolute;
@@ -51,5 +75,58 @@
 }
 
 .active{
+    color: white;
+}
+.title{
+    width: 100%;
+    height: 35px;
+    background-color: #2f2f2f;
+    line-height: 35px;
+    padding-left: 30px;
+    font-size: 15px;
+    color: white;
+    font-weight: inherit;
+}
+.playlist{
+   position: fixed;
+   height: 200px;
+   width: 500px;
+   bottom: 50px;
+   right: 200px;
+   background-color: #2f2f2f;
+   z-index: 100;
+   ul{
+       width: 500px;
+       li{
+           cursor: pointer;
+           padding: 15px 0;
+           background-color: #2f2f2f;
+           position: relative;
+        span{
+            position: absolute;
+            top: 5px;
+            color: white;
+        }
+        .songname{
+             left: 30px;
+        }
+        .singer{
+            left: 330px;
+        }
+        .time{
+            left: 400px;
+        }
+       }
+       li:hover{
+           background-color: black;
+       }
+   }
+
+}
+.btn{
+    position: absolute;
+    top: 35px;
+    left: 1000px;
+    font-size: 20px;
     color: white;
 }

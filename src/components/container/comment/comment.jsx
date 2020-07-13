@@ -61,7 +61,7 @@ export default class CommentItem extends Component {
             <span className={cssobj.reply}>
               <img style={{ width: 22, height: 22,cursor:'pointer' }} src="/static/点赞.png" alt="" />
               <a href="">({comment.likedCount})</a>&nbsp;&nbsp;&nbsp;
-                 <a href="javascript:void(0)" onClick={this.setVisible}>回复</a>
+                 <a href="" onClick={this.setVisible}>回复</a>
             </span>
            </div> 
            <div style={{display:visible?'block':'none'}} className={cssobj.addcomment_wrap}>
