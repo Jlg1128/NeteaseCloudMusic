@@ -185,3 +185,84 @@ export const getSongUrl= (payload) =>{
     })
   }
 
+//提交评论
+export const submitComment = ({id,content,commentId})=>{
+    return request('http://localhost:3000/comment',{
+        method:'post',
+        params:{
+            t:'1',
+            type:'0',
+            id,   //歌曲id
+            content,  
+            commentId,  //userid
+        },
+        headers:{
+            'Content-Type':'application/json'
+        }
+    })
+    .then(res=>{
+       console.log(res)
+        return res
+    })
+    .catch(err=>{
+    })
+}
+//获取ThreadId
+function getThreadId(targetid,time){
+    return  request('http://localhost:3000/user/event',{
+            method:"get",
+            params:{
+                uid:targetid
+            }
+        })
+        .then(res=>{
+            console.log(res);
+            console.log(time);
+            let result = res.events.filter(item=>{
+                item.eventTime != time
+            })
+            console.log(result);
+            let {threadId} = result[0].info
+            return threadId
+        })
+}
+//回复动态评论
+export const reply = ({targetid,id,content,commentId,time})=>{
+          return request('http://localhost:3000/comment',{
+            method:'get',
+            params:{
+                t:2,
+                type:6,
+                id,   //歌曲id
+                content,  
+                commentId,   //userid
+            }
+        })
+    .then(res=>{
+        return res
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
+//点赞
+export const clicklike = ({targetid,id,content,commentId,time})=>{
+    // let threadId = getThreadId(targetid,time)
+    console.log(id);
+          return request('http://localhost:3000/comment/like',{
+            method:'get',
+            params:{
+                t:1,
+                type:0  ,
+                cid:id,   //歌曲id
+                id:targetid,   //评论id
+            }
+        })
+    .then(res=>{
+        return res
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
+

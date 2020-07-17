@@ -30,7 +30,12 @@ class Songinfo extends Component {
         }
        this.timer =  setTimeout(() => {
             audio.play()
-        }, 500);
+        }, 1000);
+    }
+    handelSubmitComment=(value)=>{
+         if(value){
+      this.props.dispatch({ type: "recommend/setVisible", payload: true })
+         }
     }
     componentDidMount() {
         var currenuserid = Cookies.get('uid')
@@ -41,11 +46,12 @@ class Songinfo extends Component {
                 payload: parseInt(currenuserid)
             })
         }
+            //获取歌曲详情,以及歌曲封面，以及音乐url
             this.props.dispatch({
                 type:"songabout/getMusicInfoAsync",
                 payload:this.props.match.params.songid
             })
-            //获取歌曲相关信息
+            //获取歌曲相关信息：歌词、评论、喜欢歌单、相似歌曲
             this.props.dispatch({
                 type:"songabout/getMusicAbout",
                 payload:{musicid:this.props.match.params.songid,currenuserid}
@@ -53,18 +59,18 @@ class Songinfo extends Component {
     }   
 
     render() {
-        const { songabout, dispatch, userinfo } = this.props
+        const { songabout, dispatch, userinfo,userlogstatus } = this.props
         const { lyrics, comments, musicInfo, similarMusic,commentsLength ,likelist} = songabout
         let lrc = parseLRC(lyrics)
         const { isdropdown,musicid } = this.state
         const iconchange = isdropdown ? (<i className={cssobj.font}></i>) : (<i className={cssobj.font}></i>)
-        const addcommentModule = comments.length > 0 ? <AddComment avatar={userinfo.avatarUrl} username={userinfo.nickname} /> : ''
+        const addcommentModule = comments.length > 0 ? <AddComment dispatch={dispatch} handelSubmitComment={this.handelSubmitComment} musicid = {musicid} userid={userinfo.userId}  logstatus = {userlogstatus} avatar={userinfo.avatarUrl} username={userinfo.nickname} /> : ''
         let commentsModule = comments.length > 0 ? comments.map((item, index) => {
-            return <Comment key={index} comment={item} />
+            return <Comment key={index} musicid={musicid} userid={userinfo.userId} dispatch={dispatch} handelSubmitComment={this.handelSubmitComment} logstatus = {userlogstatus} comment={item} />
         }) : <div>Loding.....</div>
         return (
             <div>
-                <HideWindow dispatch={dispatch} likelist={likelist} songurl={musicInfo.songurl} picUrl={musicInfo.picUrl} songname={musicInfo.songname} singername={musicInfo.singername} />
+                <HideWindow dispatch={dispatch} likelist={likelist} musicInfo={musicInfo} />
                 <div className={`${cssobj.outside_wrap} ${cssobj.clearfix}`}>
                     <div className={`${cssobj.main_wrap}`}>
                         {/* 歌曲详情 */}
@@ -159,7 +165,7 @@ class Songinfo extends Component {
 
 function mapStateToProps(state) {
 
-    return { clickindex: state.recommend.clickindex, songabout: state.songabout, userinfo: state.userinfo.userinfo }
+    return { clickindex: state.recommend.clickindex, songabout: state.songabout, userinfo: state.userinfo.userinfo,userlogstatus:state.userinfo.userlogstatus }
 }
 
 export default connect(mapStateToProps)(Songinfo)

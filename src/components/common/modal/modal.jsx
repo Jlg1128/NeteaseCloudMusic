@@ -3,9 +3,13 @@ import RegisterModal from './registermodal'
 import { Modal, Button,Input, } from 'antd';
 import cssobj from './modal.less'
 import {connect} from 'umi'
+import Alert from '../alert/alert'
 import './modal.less'
 
 class ModalWindow extends Component{
+      state={
+        visible:false
+      }
       handleOk=()=>{
         this.props.dispatch({
           type:"recommend/setVisible",
@@ -20,7 +24,14 @@ class ModalWindow extends Component{
       }
       handleclick=()=>{
         if(this.input.checked===false){
-          alert('请勾选条款内容')
+          this.setState({
+            visible:true
+          })
+          setTimeout(() => {
+            this.setState({
+              visible:false
+            })
+          }, 300);
         }else{
           this.props.dispatch({
             type:"recommend/setRegisterVisible",
@@ -37,6 +48,7 @@ class ModalWindow extends Component{
         const {visible,registervisible} = this.props
         return (
           <div>
+            <Alert visible={this.state.visible} content={'请勾选服务条款'}/>
             <Modal
             visible={visible}
               title="登录"

@@ -15,7 +15,6 @@ export default class Hidewindow extends Component {
     play = ()=>{
         audio.play()
         setTimeout(() => {
-    
             this.setState({
                 isrender:!this.state.isrender
             })
@@ -29,7 +28,6 @@ export default class Hidewindow extends Component {
             })
         }, 0);
         audio.pause()
-
     }
     showplaylist = ()=>{
         this.setState({
@@ -65,7 +63,8 @@ export default class Hidewindow extends Component {
        }
    }
     render() {
-        const {songurl,songname,singername,picUrl,likelist} = this.props
+        const {likelist} = this.props
+        const {songurl,songname,singername,picUrl} = this.props.musicInfo
         const { bottom,playlistshow} = this.state
         const playbtn = this.audio&&this.audio.paused?<PlayCircleOutlined onClick={this.play} className={cssobj.musicplay} />:<PauseCircleOutlined onClick={this.pause} className={cssobj.musicplay} />
         return <div style={{bottom:`${bottom}`}} className={cssobj.Hidewindow}>

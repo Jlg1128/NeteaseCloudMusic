@@ -5,7 +5,6 @@ import { Menu, Dropdown, Input } from 'antd';
 import { Link } from 'umi'
 import { history } from 'umi'
 
-
 export default class Nav extends React.Component {
     constructor() {
         super()
@@ -62,7 +61,6 @@ export default class Nav extends React.Component {
         }
     }
     render() {
-        console.log(this.state.alert);
         const alertshow = ()=>{
             if( Object.keys(this.state.alert).length>0){
                 if(this.state.alert.albums){
@@ -118,6 +116,7 @@ export default class Nav extends React.Component {
                 return (<h3 className={cssobj.register} onClick={this.log} style={{ color: '#cccccc' }}>登录</h3>)
             }
         }
+
         return <div className={cssobj.nav}>
             <h1 className='logo'>
                 <Link to='/'>
@@ -129,7 +128,7 @@ export default class Nav extends React.Component {
                 {list.map((item, index) => {
                     if (index < 3) {
                         return (
-                            <li key={index}><a className='link' style={{ backgroundColor: (item.path === history.location.pathname) ? 'black' : '' }}>{item.title}</a></li>
+                            <li key={index} onClick={()=>history.push(item.path)}><a className='link' style={{ backgroundColor: (item.path === history.location.pathname) ? 'black' : '' }}>{item.title}</a></li>
                         )
                     } else {
                         return (

@@ -1,6 +1,6 @@
 export const  parseLRC = (lrc)=>{
     var lrcObj = {}
-    var regExp = /\[(\d{2}):(\d{2})\.(\d{3})\](.*)/g ;
+    var regExp = /\[(\d{2}):(\d{2})\.(\d{2,3})\](.*)/g ;
     while (1){
         //                得到匹配格式的歌词
                         var result = regExp.exec(lrc);
@@ -17,8 +17,6 @@ export const  parseLRC = (lrc)=>{
                     }
                     let lrcArr = Object.values(lrcObj)
                     return lrcArr
-         
-                    
  };
 
  export  function arrayExchange(array){

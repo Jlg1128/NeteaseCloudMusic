@@ -1,5 +1,5 @@
 import {
-    getMusicInfo, getAblumInfo, getSongUrl, getCommentsLength, getSongabout, getLyrics
+    getMusicInfo, getAblumInfo, getSongUrl, getCommentsLength, getSongabout, getLyrics,submitComment,reply,clicklike
 } from '../service/song'
 export default {
     namespace: 'songabout',
@@ -53,6 +53,34 @@ export default {
                 })
             }
         },
+
+        //提交评论
+        *submitCommentAsync({ payload }, { call, put }) {
+            const result = yield call(submitComment, payload)
+            console.log(result);
+            // if (result) {
+            //     yield put({
+            //         type: 'getLyrics',
+            //         payload: result
+            //     })
+            // }
+        },
+        //回复评论
+        *replyAsync({ payload }, { call, put }) {
+            const result = yield call(reply, payload)
+            console.log(result);
+            // if (result) {
+            //     yield put({
+            //         type: 'getLyrics',
+            //         payload: result
+            //     })
+            // }
+        },
+        //点赞
+        *clicklikeAsync({ payload }, { call, put }) {
+            const result = yield call(clicklike, payload)
+            console.log(result);
+        },
         //获取歌词
         *getLyricsAsync({ payload }, { call, put }) {
             const result = yield call(getLyrics, payload)
@@ -63,6 +91,7 @@ export default {
                 })
             }
         },
+
         //获取歌曲详情,以及歌曲封面，以及音乐url
         *getMusicInfoAsync({ payload }, { call, put }) {
             var newresult = yield call(getMusicInfo, payload)
