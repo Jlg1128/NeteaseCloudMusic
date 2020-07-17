@@ -16,3 +16,7 @@ export function getToplist2(params){
 
      return request('/api/Toplist2')
 }
+export function getImages(params){
+
+     return request('/api/images')
+}

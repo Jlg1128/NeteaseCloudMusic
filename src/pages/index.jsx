@@ -31,7 +31,7 @@ class Index extends React.Component {
             <Recommend userloginfo={userloginfo} toplisthot={toplisthot} toplistnewest={toplistnewest} toplisthotorigin={toplisthotorigin} HotJoinedSinger={HotJoinedSinger} NewestAblum={NewestAblum} HotZhubo={HotZhubo} dailyRecommendMusic={dailyrecommendmusic} dispatch={dispatch} />
             <Foot />
             <ScrollTop />
-            <Hidewindow />
+
         </div>
     }
 }

@@ -99,7 +99,7 @@ export default class Hidewindow extends Component {
                 {/* <PlayCircleOutlined onClick={this.play} className={cssobj.musicplay} />
                 <PauseCircleOutlined onClick={this.pause} className={cssobj.musicpause} /> */}
                 <RightCircleOutlined  className={cssobj.right} />
-                <audio id='audio' ref={audio=>this.audio = audio} src={songurl} loop>歌曲</audio>
+                <audio id='audio' ref={audio=>this.audio = audio} src={songurl?songurl:''} loop>歌曲</audio>
                 <UnorderedListOutlined className={cssobj.btn} onClick={this.showplaylist}></UnorderedListOutlined>
             </div>
 
