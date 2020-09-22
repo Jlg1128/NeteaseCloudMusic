@@ -1,11 +1,8 @@
 import { Comment, Avatar, Form, Button, List, Input } from 'antd';
-import Cookies from 'js-cookie'
-import Alert from '../../common/alert/alert'
-
+import Cookies from 'js-cookie';
+import Alert from '../../common/alert/alert';
 
 const { TextArea } = Input;
-
-
 
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
   <div>
@@ -13,36 +10,42 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
       <TextArea rows={4} onChange={onChange} value={value} />
     </Form.Item>
     <Form.Item>
-      <Button style={{marginRight:50}} htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
+      <Button
+        style={{ marginRight: 50 }}
+        htmlType="submit"
+        loading={submitting}
+        onClick={onSubmit}
+        type="primary"
+      >
         评论
       </Button>
     </Form.Item>
-    </div>
+  </div>
 );
 
 export default class Addcomment extends React.Component {
   state = {
     submitting: false,
     value: '',
-    visible:false
+    visible: false,
   };
 
   handleSubmit = () => {
-    if (!this.state.value ) {
+    if (!this.state.value) {
       return;
     }
-    if(!this.props.logstatus){
-      this.props.handelSubmitComment(true)
-      return ;
+    if (!this.props.logstatus) {
+      this.props.handelSubmitComment(true);
+      return;
     }
     this.props.dispatch({
-      type:'songabout/submitCommentAsync',
-      payload:{
+      type: 'songabout/submitCommentAsync',
+      payload: {
         id: this.props.musicid,
-        content:this.state.value,
-        commentId:this.props.userid
-      }
-    })
+        content: this.state.value,
+        commentId: this.props.userid,
+      },
+    });
     this.setState({
       submitting: true,
     });
@@ -50,11 +53,11 @@ export default class Addcomment extends React.Component {
       this.setState({
         submitting: false,
         value: '',
-        visible:true
+        visible: true,
       });
       setTimeout(() => {
         this.setState({
-          visible:false
+          visible: false,
         });
       }, 1500);
     }, 1000);
@@ -67,19 +70,13 @@ export default class Addcomment extends React.Component {
   };
 
   render() {
-
-    const {  submitting, value,visible } = this.state;
-    const {avatar,username} = this.props
+    const { submitting, value, visible } = this.state;
+    const { avatar, username } = this.props;
     return (
-        <div>
-          <Alert visible={visible} content={'评论成功'}/>
+      <div>
+        <Alert visible={visible} content={'评论成功'} />
         <Comment
-          avatar={
-            <Avatar
-              src={avatar}
-              alt={username}
-            />
-          }
+          avatar={<Avatar src={avatar} alt={username} />}
           content={
             <Editor
               onChange={this.handleChange}
