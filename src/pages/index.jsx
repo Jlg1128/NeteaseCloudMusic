@@ -10,6 +10,7 @@ import Cookies from 'js-cookie';
 
 class Index extends React.Component {
   componentDidMount() {
+    document.title = '网易云音乐';
     let uid = Cookies.get('uid');
     if (uid && !this.props.userloginfo.userlogstatus) {
       this.props.dispatch({
