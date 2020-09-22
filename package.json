@@ -22,6 +22,7 @@
   "dependencies": {
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.2.1",
+    "axios": "^0.20.0",
     "js-cookie": "^2.2.1",
     "lint-staged": "^10.0.7",
     "mockjs": "^1.1.0",

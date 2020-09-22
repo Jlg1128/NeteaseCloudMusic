@@ -1,55 +1,86 @@
-import { request } from 'umi';
+import { request } from '../util/request';
 import { arrayExchange } from '../util/util';
+
+//首页相关api，以及用户登录状态api
+const api = {
+  banner: `/banner`,
+  recommendMusic: `/personalized/newsong`,
+  hotJoinedSinger: `/top/artists`,
+  HotZhubolist: `/dj/toplist/newcomer`,
+  NewestAblum: `/top/album`,
+  handelSearch: `/search/suggest`,
+
+  userlogin: `/login/cellphone`,
+  userlogstatus: `/login/status`,
+  userdetail: `/user/detail`,
+};
 
 export const getRecommendMusicInfo = () => {
   //首页轮播图
   var getIndexSwiper = new Promise((resolve, reject) => {
-    return request('http://localhost:3000/banner')
+    return request(api.banner)
       .then(res => {
-        resolve({ IndexSwiper: res.banners });
+        console.log(res);
+        resolve({ IndexSwiper: res.data.banners });
       })
       .catch(err => reject(err));
   });
   //热门推荐
   var getRecommendMusic = new Promise((resolve, reject) => {
-    return request('http://localhost:3000/personalized/newsong')
-      .then(res => resolve({ dailyrecommendmusic: res.result.slice(0, 8) }))
+    return request(api.recommendMusic)
+      .then(res => {
+        console.log(res);
+        resolve({ dailyrecommendmusic: res.data.result.slice(0, 8) });
+      })
       .catch(err => reject(err));
   });
   //获取入住热门歌手
   var getHotJoinedSinger = new Promise((resolve, reject) => {
-    return request('http://localhost:3000/top/artists', {
+    return request(api.hotJoinedSinger, {
       method: 'get',
       params: {
         limit: 5,
       },
     })
-      .then(res => resolve({ HotJoinedSinger: res.artists }))
+      .then(res => {
+        console.log(res);
+        resolve({ HotJoinedSinger: res.data.artists });
+      })
       .catch(err => reject(err));
   });
   //获取热门主播
   var getHotZhubolist = new Promise((resolve, reject) => {
-    return request('http://localhost:3000/dj/toplist/newcomer', {
+    return request(api.HotZhubolist, {
       method: 'get',
       params: {
         limit: 5,
       },
     })
-      .then(res => resolve({ HotZhubo: res.data.list }))
+      .then(res => {
+        console.log(res);
+        resolve({ HotZhubo: res.data.data.list });
+      })
       .catch(err => reject(err));
   });
   //新碟上架
   var getNewestAblum = new Promise((resolve, reject) => {
-    return request('http://localhost:3000/top/album', {
+    return request(api.NewestAblum, {
       method: 'get',
       params: {
         limit: 5,
       },
     })
-      .then(res => resolve({ NewestAblum: res.albums }))
+      .then(res => {
+        console.log(res);
+        resolve({ NewestAblum: res.data.albums });
+      })
       .catch(err => reject(err));
   });
-  // //飙升榜
+  /**
+   * 接口失效
+   */
+
+  //飙升榜
   // var gettoplisthot = new Promise((resolve, reject) => {
   //   return request('http://localhost:3000/top/list', {
   //     method: "get",
@@ -73,7 +104,7 @@ export const getRecommendMusicInfo = () => {
   //     .then(res => resolve({toplistnewest:res.playlist.tracks.slice(0, 10)}))
   //     .catch(err => reject(err))
   // })
-  // //首页榜单-原创榜
+  //首页榜单-原创榜
   // var gettoplistorigin = new Promise((resolve, reject) => {
   //   return request('http://localhost:3000/top/list', {
   //     method: "get",
@@ -105,7 +136,7 @@ export const getRecommendMusicInfo = () => {
 
 //用户登录
 export const userlog = payload => {
-  return request('http://localhost:3000/login/cellphone', {
+  return request(api.userlogin, {
     method: 'get',
     credentials: 'include',
     params: {
@@ -114,7 +145,7 @@ export const userlog = payload => {
     },
   })
     .then(res => {
-      return res;
+      return res.data;
     })
     .catch(err => {
       return { code: 502 };
@@ -123,12 +154,12 @@ export const userlog = payload => {
 
 //获取用户登录状态
 export const getuserlogstatus = payload => {
-  return request('http://localhost:3000/login/status');
+  return request(api.userlogstatus);
 };
 
 //登录获取用户详情,传入用户id
 export const userdetail = uid => {
-  return request('http://localhost:3000/user/detail', {
+  return request(api.userdetail, {
     method: 'get',
     params: {
       uid,
@@ -137,14 +168,14 @@ export const userdetail = uid => {
 };
 //搜索关键字提示
 export const handelSearch = keywords => {
-  return request('http://localhost:3000/search/suggest', {
+  return request(api.handelSearch, {
     method: 'get',
     params: {
       keywords,
     },
   })
     .then(res => {
-      return res.result;
+      return res.data.result;
     })
     .catch(err => {
       console.log(err);
