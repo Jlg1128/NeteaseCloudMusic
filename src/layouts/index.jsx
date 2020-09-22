@@ -5,6 +5,9 @@ import Head_nav from '../components/common/head_nav/head_nav';
 import Modal from '../components/common/modal/modal';
 import { connect } from 'umi';
 class Layout extends Component {
+  componentDidMount() {
+    document.title = '网易云音乐';
+  }
   render() {
     const { clickindex, dispatch, userloginfo, alert } = this.props;
     return (
