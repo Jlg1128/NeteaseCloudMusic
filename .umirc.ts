@@ -1,5 +1,6 @@
 import { defineConfig } from 'umi';
 export default defineConfig({
+  title: '网易云音乐',
   favicon: '/static/1.jpg',
 
   //  更改路径名
@@ -14,5 +15,5 @@ export default defineConfig({
   },
   //按需加载
   dynamicImport: {},
-  ssr: { mode: 'stream' },
+  // ssr: { mode: 'stream' },
 });

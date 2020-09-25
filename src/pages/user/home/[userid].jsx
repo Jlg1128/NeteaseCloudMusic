@@ -5,12 +5,12 @@ import {getImages} from '../../../service/getmock'
 import Lazyload from '../../../components/common/lazyload/lazyload'
 import '../lazy.less'
 
-function getimage(){
-    return request('http://localhost:8000/api/images')
-    .then(res=>{
-        return res
-    })
-}
+// function getimage(){ 
+//     return request('http://localhost:8000/api/images')
+//     .then(res=>{
+//         return res
+//     })
+// }
 class Userinfo extends Component{
     state={
         list:[]
