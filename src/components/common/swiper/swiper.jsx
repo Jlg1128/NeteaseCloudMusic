@@ -45,12 +45,14 @@ export default class Swiper extends Component {
       );
     return (
       <div className={cssobj.Swiper}>
-        <Carousel autoplay className={cssobj.Carousel}>
-          {swiper}
-        </Carousel>
-        <div className={cssobj.install}>
-          <img alt="" />
-          <button>下载客户端</button>
+        <div className={cssobj.swiperContainer}>
+          <Carousel autoplay className={cssobj.Carousel}>
+            {swiper}
+          </Carousel>
+          <div className={cssobj.install}>
+            <img alt="" />
+            <button>下载客户端</button>
+          </div>
         </div>
       </div>
     );
