@@ -1,3 +1,6 @@
+/* eslint-disable block-scoped-var */
+/* eslint-disable no-var */
+/* eslint-disable vars-on-top */
 import React from 'react';
 
 import { Menu, Dropdown, Input } from 'antd';
