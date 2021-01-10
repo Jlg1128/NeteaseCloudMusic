@@ -193,10 +193,10 @@ export default class Nav extends React.Component {
     };
 
     return (
-      <div className="navWrapper">
-        <div className="container">
+      <div className={cssobj.navWrapper}>
+        <div className={cssobj.container}>
           <div className={cssobj.nav}>
-            <h1 className="logo">
+            <h1 className={cssobj.logo}>
               <Link to="/">
                 <div className={cssobj.logoJump}>
                   <img src="/static/logo.jpg" alt="" />
@@ -237,7 +237,7 @@ export default class Nav extends React.Component {
                 value={this.state.keywords}
                 className={cssobj.nav_search}
                 onChange={e => this.handleChange(e.currentTarget.value)}
-                onSearch={() => {}}
+                onSearch={() => { console.log('搜索'); }}
               />
               <div
                 style={{ display: this.state.keywords ? 'block' : 'none' }}
