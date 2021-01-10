@@ -1,3 +1,5 @@
+@import '~antd/es/style/themes/default.less';
+
 @primary-color: #242424;
 @font-color: #cccccc;
 @bgc_color: #e7e7e7;
@@ -82,3 +84,48 @@ body {
   margin-bottom: 8px;
   margin-left: 8px;
 }
+
+.container {
+  margin: 0 auto;
+  padding: 0 10px;
+
+  @media screen and (min-width: @large) {
+    width: 90%;
+    max-width: 1200px;
+  }
+
+  // @include mq($large-up) {
+  //   width: 90%;
+  //   max-width: 1200px;
+  // }
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-column {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+// $breakpointRange: (415px, 640px, 960px, 1200px);
+
+@xlarge: 1200px;
+@large: 960px;
+@medium: 640px;
+@small: 415px;
+// @xsmall-only: ~"@media screen and (max-width:415px)";
+// @small-only: ~"@media screen and (max-width:640px)";
+// @medium-up: ~"@media screen and (min-width:640px)";
+// @large-up: ~" (min-width:960px)";
+// @xlarge-up: ~"@media screen and (min-width:1200px)";

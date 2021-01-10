@@ -1,27 +1,37 @@
-@primary-color:#242424;
+@import '../../../global.less';
 
-.haed_nav{
-    height: 30px;
-    width: 100%;    
-    overflow: hidden;
-    background-color: #c20c0c;
+@primary-color: #242424;
+
+.haed_nav_warpper {
+  width: 100%;
+  height: 30px;
 }
-.haed_nav_ul{
-    margin-left: 330px;
-    height: 100%;
+.haed_nav {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-color: #c20c0c;
+}
+
+.haed_nav_ul {
+  margin: 0 auto;
+  height: 100%;
+  .flex-center;
+  margin-right: 20%;
+  li {
     float: left;
-    li{
-     float: left;
-     margin-left: 35px;
-     display: block;
-    }
+    margin-left: 35px;
+    display: block;
+  }
 }
-.haed_nav_link{
-   color: white;
-   line-height: 30px;
-   border-radius: 5px;
-   padding: 2px 3px ;
+
+.haed_nav_link {
+  color: white;
+  line-height: 30px;
+  border-radius: 5px;
+  padding: 2px 3px;
 }
-.haed_nav_link:hover{
-    background-color: @primary-color;
+
+.haed_nav_link:hover {
+  background-color: @primary-color;
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { history } from 'umi';
 import cssobj from './head_nav.less';
 
-export default class HeadNav extends Component {
+export default class Head_nav extends Component {
   state = {
     isrender: false,
     list: [
@@ -30,23 +30,29 @@ export default class HeadNav extends Component {
     const { list } = this.state;
     return (
       <div>
-        <div className={cssobj.haed_nav}>
-          <ul className={cssobj.haed_nav_ul}>
-            {list.map(item => (
-              <li key={item.title}>
-                <span
-                  onClick={() => this.handleClick(item.path)}
-                  className={cssobj.haed_nav_link}
-                  style={{
-                    backgroundColor:
-                      item.path === history.location.pathname ? '#242424' : '',
-                  }}
-                >
-                  {item.title}
-                </span>
-              </li>
-            ))}
-          </ul>
+        <div className={cssobj.haed_nav_warpper}>
+          <div className={cssobj.haed_nav}>
+            <div className="container">
+              <ul className={cssobj.haed_nav_ul}>
+                {list.map((item, index) => (
+                  <li key={index}>
+                    <span
+                        onClick={() => this.handleClick(item.path)}
+                        className={cssobj.haed_nav_link}
+                        style={{
+                          backgroundColor:
+                            item.path === history.location.pathname
+                              ? '#242424'
+                              : '',
+                        }}
+                      >
+                      {item.title}
+                    </span>
+                  </li>
+                  ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     );

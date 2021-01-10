@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'umi';
+
 import Nav from '../components/common/nav/nav';
 import HeadNav from '../components/common/head_nav/head_nav';
 import Modal from '../components/common/modal/modal';

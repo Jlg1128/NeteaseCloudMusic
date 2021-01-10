@@ -1,12 +1,8 @@
-/* eslint-disable import/no-duplicates */
-/* eslint-disable no-var */
-/* eslint-disable react/jsx-indent */
 import React from 'react';
 
 import { Menu, Dropdown, Input } from 'antd';
 import { Link, history } from 'umi';
 import cssobj from './nav.less';
-import './nav.less';
 
 export default class Nav extends React.Component {
   constructor() {
@@ -72,90 +68,88 @@ export default class Nav extends React.Component {
     }
   }
 
-  alertshow = () => {
-    var albumslist;
-    var artistslist;
-    var playlistslist;
-    var songslist;
-    if (Object.keys(this.state.alert).length > 0) {
-      if (this.state.alert.albums) {
-        albumslist = this.state.alert.albums.map((item, index) => (
-          <li
-            onClick={() =>
-              history.push(`/album/${item.id}`, this.setState({ keywords: '' }))
-            }
-            key={index}
-          >
-            ) 专辑--
-            {item.name}
-            --
-            {item.artist.name}
-          </li>
-        ));
+  render() {
+    const alertshow = () => {
+      if (Object.keys(this.state.alert).length > 0) {
+        if (this.state.alert.albums) {
+          var albumslist = this.state.alert.albums.map((item, index) => (
+            <li
+                onClick={() =>
+                  history.push(
+                    `/album/${item.id}`,
+                    this.setState({ keywords: '' }),
+                  )
+                }
+                key={index}
+              >
+              专辑--
+              {item.name}
+              --
+              {item.artist.name}
+            </li>
+            ));
+        }
+        if (this.state.alert.artists) {
+          var artistslist = this.state.alert.artists.map((item, index) => (
+            <li
+                onClick={() =>
+                  history.push(
+                    `/artist/${item.id}`,
+                    this.setState({ keywords: '' }),
+                  )
+                }
+                key={index}
+              >
+              歌手--
+              {item.name}
+            </li>
+            ));
+        }
+        if (this.state.alert.playlists) {
+          var playlistslist = this.state.alert.playlists.map((item, index) => (
+            <li
+                onClick={() => (
+                  history.push(`/playlist/${item.id}`),
+                  this.setState({ keywords: '' })
+                )}
+                key={index}
+              >
+              歌单--
+              {item.name}
+            </li>
+            ));
+        }
+        if (this.state.alert.songs) {
+          var songslist = this.state.alert.songs.map((item, index) => (
+            <li
+                onClick={() => (
+                  history.push(`/song/${item.id}`),
+                  this.setState({ keywords: '' })
+                )}
+                key={index}
+              >
+              单曲--
+              {item.name}
+            </li>
+            ));
+        }
       }
-      if (this.state.alert.artists) {
-        artistslist = this.state.alert.artists.map((item, index) => (
-          <li
-            onClick={() =>
-              history.push(
-                `/artist/${item.id}`,
-                this.setState({ keywords: '' }),
-              )
-            }
-            key={index}
-          >
-            歌手--
-            {item.name}
-          </li>
-        ));
-      }
-      if (this.state.alert.playlists) {
-        playlistslist = this.state.alert.playlists.map((item, index) => (
-          <li
-            onClick={() => (
-              history.push(`/playlist/${item.id}`),
-              this.setState({ keywords: '' })
-            )}
-            key={index}
-          >
-            歌单--
-            {item.name}
-          </li>
-        ));
-      }
-      if (this.state.alert.songs) {
-        songslist = this.state.alert.songs.map((item, index) => (
-          <li
-            onClick={() => (
-              history.push(`/song/${item.id}`), this.setState({ keywords: '' })
-            )}
-            key={index}
-          >
-            单曲--
-            {item.name}
-          </li>
-        ));
-      }
-    }
-    return [songslist, artistslist, albumslist, playlistslist];
-  };
-
-  profileshow = () => {
-    const { logstatus, avatarurl } = this.props;
-    const { dropdowninfo } = this.state;
+      return [songslist, artistslist, albumslist, playlistslist];
+    };
+    const { dropdowninfo, list } = this.state;
     const menu = (
       <Menu>
         {dropdowninfo.map((item, index) => (
           <Menu.Item key={index}>
             <h3
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => history.push(item.href)}
-            >
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => history.push(item.href)}
+              >
               {item.title}
             </h3>
           </Menu.Item>
-        ))}
+          ))}
         <Menu.Item>
           <h3
             target="_blank"
@@ -167,90 +161,95 @@ export default class Nav extends React.Component {
         </Menu.Item>
       </Menu>
     );
-    if (logstatus) {
-      return (
-        <Dropdown arrow overlay={menu} placement="bottomCenter">
-          <img
-            src={avatarurl}
-            style={{
-              width: 35,
-              height: 35,
-              marginTop: 20,
-              marginLeft: 10,
-              borderRadius: '50%',
-            }}
-            alt="头像"
-          />
-        </Dropdown>
-      );
-    }
-    return (
-      <h3
-        className={cssobj.register}
-        onClick={this.log}
-        style={{ color: '#cccccc' }}
-      >
-        登录
-      </h3>
-    );
-  };
-
-  render() {
-    const { list } = this.state;
+    const { logstatus, avatarurl } = this.props;
     const { Search } = Input;
-    return (
-      <div className={cssobj.nav}>
-        <h1 className={cssobj.logo}>
-          <Link to="/">
-            <img src="/static/logo.jpg" alt="" />
-            <h3 style={{ color: 'white' }}>网易云音乐</h3>
-          </Link>
-        </h1>
-        <ul className={cssobj.nav_ul}>
-          {list.map((item, index) => {
-            if (index < 3) {
-              return (
-                <li key={index} onClick={() => history.push(item.path)}>
-                  <a
-                    className="link"
-                    style={{
-                      backgroundColor:
-                        item.path === history.location.pathname ? 'black' : '',
-                    }}
-                  >
-                    {item.title}
-                  </a>
-                </li>
-              );
-            }
-            return (
-              <li key={index}>
-                <a className="link" href={item.path}>
-                  {item.title}
-                </a>
-              </li>
-            );
-          })}
-
-          <Search
-            placeholder="音乐/视频/电台/用户"
-            allowClear="true"
-            value={this.state.keywords}
-            className={cssobj.nav_search}
-            onChange={e => this.handleChange(e.currentTarget.value)}
-            onSearch={() => {
-              console.log('搜索');
-            }}
-          />
-          <div
-            style={{ display: this.state.keywords ? 'block' : 'none' }}
-            className={cssobj.search_info}
+    const profileshow = () => {
+      if (logstatus) {
+        return (
+          <Dropdown arrow overlay={menu} placement="bottomCenter">
+            <img
+              src={avatarurl}
+              style={{
+                width: 35,
+                height: 35,
+                marginTop: 20,
+                marginLeft: 10,
+                borderRadius: '50%',
+              }}
+              alt="头像"
+            />
+          </Dropdown>
+        );
+      }
+        return (
+          <h3
+            className={cssobj.register}
+            onClick={this.log}
+            style={{ color: '#cccccc' }}
           >
-            <ul>{this.alertshow().map(item => item)}</ul>
+            登录
+          </h3>
+        );
+    };
+
+    return (
+      <div className="navWrapper">
+        <div className="container">
+          <div className={cssobj.nav}>
+            <h1 className="logo">
+              <Link to="/">
+                <div className={cssobj.logoJump}>
+                  <img src="/static/logo.jpg" alt="" />
+                  <h3 style={{ color: 'white' }}>网易云音乐</h3>
+                </div>
+              </Link>
+            </h1>
+            <ul className={cssobj.nav_ul}>
+              {list.map((item, index) => {
+                if (index < 3) {
+                  return (
+                    <li key={index} onClick={() => history.push(item.path)}>
+                      <a
+                        className="link"
+                        style={{
+                          backgroundColor:
+                            item.path === history.location.pathname
+                              ? 'black'
+                              : '',
+                        }}
+                      >
+                        {item.title}
+                      </a>
+                    </li>
+                  );
+                }
+                  return (
+                    <li key={index}>
+                      <a className="link" href={item.path}>
+                        {item.title}
+                      </a>
+                    </li>
+                  );
+              })}
+              <Search
+                placeholder="音乐/视频/电台/用户"
+                allowClear="true"
+                value={this.state.keywords}
+                className={cssobj.nav_search}
+                onChange={e => this.handleChange(e.currentTarget.value)}
+                onSearch={() => {}}
+              />
+              <div
+                style={{ display: this.state.keywords ? 'block' : 'none' }}
+                className={cssobj.search_info}
+              >
+                <ul>{alertshow().map(item => item)}</ul>
+              </div>
+            </ul>
+            <button className={cssobj.btn}>创作者中心</button>
+            {profileshow()}
           </div>
-        </ul>
-        <button className={cssobj.btn}>创作者中心</button>
-        {this.profileshow()}
+        </div>
       </div>
     );
   }
