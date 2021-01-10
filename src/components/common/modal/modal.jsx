@@ -115,7 +115,8 @@ class ModalWindow extends Component {
               </ul>
             </div>
             <div className={cssobj.agreeItem}>
-              <input ref={input => (this.input = input)} type="checkbox" /> 同意
+              <input ref={input => (this.input = input)} type="checkbox" />
+              同意
               <a href="">服务条款</a>
               <a href="">隐私政策</a>
               <a href="">儿童隐私政策</a>

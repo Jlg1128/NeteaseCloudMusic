@@ -119,7 +119,7 @@ export default class CommentItem extends Component {
               src="/static/点赞.png"
               alt=""
             />
-            <a href="">({comment.likedCount})</a>
+            <a href="">{comment.likedCount}</a>
             &nbsp;&nbsp;&nbsp;
             <a href="" onClick={this.setVisible}>
               回复
