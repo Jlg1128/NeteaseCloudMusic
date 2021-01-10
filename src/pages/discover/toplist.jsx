@@ -1,7 +1,7 @@
 import React from 'react';
+import { connect } from 'umi';
 import Foot from '../../components/common/foot/foot';
 import TopItem from '../../components/toplist/topitem';
-import { connect } from 'umi';
 
 class Toplist extends React.Component {
   render() {

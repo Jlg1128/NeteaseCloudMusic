@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Input, Button } from 'antd';
 import Alert from '../../common/alert/alert';
-import { Input, Button, Modal, Space } from 'antd';
 import cssobj from './comment.less';
 import formatDate from '../../../util/timechange';
+
 const { TextArea } = Input;
 
 export default class CommentItem extends Component {
@@ -13,12 +14,16 @@ export default class CommentItem extends Component {
     inputvalue: '',
     content: '',
   };
-  setVisible = () => {
+
+  setVisible = e => {
+    e.preventDefault();
     this.setState({
+      // eslint-disable-next-line react/no-access-state-in-setstate
       visible: !this.state.visible,
     });
   };
-  //点击评论按钮
+
+  // 点击评论按钮
   setloading = () => {
     if (!this.state.inputvalue) {
       return;
@@ -45,13 +50,14 @@ export default class CommentItem extends Component {
 
     setTimeout(() => {
       this.setState({
+        // eslint-disable-next-line react/no-access-state-in-setstate
         visible: !this.state.visible,
         loading: false,
       });
     }, 1500);
   };
 
-  //点赞
+  // 点赞
   clicklike = () => {
     this.setState({
       content: '点赞成功',
@@ -73,9 +79,10 @@ export default class CommentItem extends Component {
       });
     }, 500);
   };
+
   handleinput = e => {
-    let value = e.currentTarget.value;
-    let index = value.indexOf(':') + 1;
+    let { value } = e.currentTarget;
+    const index = value.indexOf(':') + 1;
     value = value.slice(index);
     this.setState({
       inputvalue: value,
@@ -86,7 +93,7 @@ export default class CommentItem extends Component {
     const { isalert, visible, loading, content } = this.state;
     // const url = 'http://p1.music.126.net/ma8NC_MpYqC-dK_L81FWXQ==/109951163250233892.jpg'
     const { comment } = this.props;
-    let timedata = formatDate(comment.time);
+    const timedata = formatDate(comment.time);
     return (
       <div className={`${cssobj.specialcommment} ${cssobj.clearfix}`}>
         <div className={cssobj.comment_ul}>
@@ -101,7 +108,8 @@ export default class CommentItem extends Component {
             <a style={{ color: 'blue' }} href="">
               {comment.user.nickname}
             </a>
-            &nbsp;:&nbsp;{comment.content}
+            &nbsp;:&nbsp;
+            {comment.content}
           </span>
           <i>{timedata}</i>
           <span className={cssobj.reply}>
@@ -111,8 +119,9 @@ export default class CommentItem extends Component {
               src="/static/点赞.png"
               alt=""
             />
-            <a href="">({comment.likedCount})</a>&nbsp;&nbsp;&nbsp;
-            <a href="javascript:void(0)" onClick={this.setVisible}>
+            <a href="">({comment.likedCount})</a>
+            &nbsp;&nbsp;&nbsp;
+            <a href="" onClick={this.setVisible}>
               回复
             </a>
           </span>

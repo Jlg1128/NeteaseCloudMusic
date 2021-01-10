@@ -1,24 +1,25 @@
-import React, { Component } from 'react'
-import { connect } from 'umi'
+import React, { Component } from 'react';
+import { connect } from 'umi';
 
 class Abluminfo extends Component {
 	state = {
-		ablumid: 1232
+		ablumid: 1232,
 	}
+
 	getablumid = () => {
 		console.log(this.props);
-		let { ablumid } = this.props.match.params
-		this.setState({ ablumid })
+		const { ablumid } = this.props.match.params;
+		this.setState({ ablumid });
 	}
+
 	render() {
 		return (
-			<div>
-				<button onClick={this.getablumid}>点我</button>
-				<h1>{this.state.ablumid}</h1>
-			</div>
-		)
+  <div>
+    <button onClick={this.getablumid}>点我</button>
+    <h1>{this.state.ablumid}</h1>
+  </div>
+		);
 	}
 }
 
-
-export default connect()(Userinfo)
+export default connect()(Abluminfo);

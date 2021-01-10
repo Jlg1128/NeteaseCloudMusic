@@ -2,27 +2,27 @@ import { request } from '../util/request';
 import { arrayExchange } from '../util/util';
 
 const api = {
-  getLyrics: `/lyric`, //传入musicid获取歌词
-  //获取热门歌曲评论,传入歌曲id，limit限制条数0: 歌曲 1: mv 2: 歌单 3: 专辑 4: 电台 5: 视频
-  getComments: `/comment/hot`,
-  getUserLikelist: `/likelist`, // 传入用户id获取用户喜欢歌单
-  songdetail: `/detail`, //歌曲详情
-  getSimilarMusic: `/simi/song`, //相似歌曲
-  getCommentsLength: `/comment/music`, //评论长度
-  getUserPlaylist: `/user/playlist`, //获取用户歌单
-  getMusicInfo: `/song/detail`, //获取歌曲详情,传入歌曲id
-  getAblumInfo: `/album`, //通过歌曲详情的专辑id来获取歌曲封面
-  getSongUrl: `/song/url`, //歌曲url 传入歌曲id
-  submitComment: `/comment`, //提交评论
-  getThreadId: `/user/event`, //获取ThreadId
-  reply: `/comment`, //回复动态评论
-  clicklike: `/comment/like`, //点赞
+  getLyrics: '/lyric', // 传入musicid获取歌词
+  // 获取热门歌曲评论,传入歌曲id，limit限制条数0: 歌曲 1: mv 2: 歌单 3: 专辑 4: 电台 5: 视频
+  getComments: '/comment/hot',
+  getUserLikelist: '/likelist', // 传入用户id获取用户喜欢歌单
+  songdetail: '/detail', // 歌曲详情
+  getSimilarMusic: '/simi/song', // 相似歌曲
+  getCommentsLength: '/comment/music', // 评论长度
+  getUserPlaylist: '/user/playlist', // 获取用户歌单
+  getMusicInfo: '/song/detail', // 获取歌曲详情,传入歌曲id
+  getAblumInfo: '/album', // 通过歌曲详情的专辑id来获取歌曲封面
+  getSongUrl: '/song/url', // 歌曲url 传入歌曲id
+  submitComment: '/comment', // 提交评论
+  getThreadId: '/user/event', // 获取ThreadId
+  reply: '/comment', // 回复动态评论
+  clicklike: '/comment/like', // 点赞
 };
 
 export const getSongabout = payload => {
-  //传入musicid获取歌词
-  var getLyrics = new Promise((resolve, reject) => {
-    return request(api.getLyrics, {
+  // 传入musicid获取歌词
+  const getLyrics = new Promise((resolve, reject) =>
+    request(api.getLyrics, {
       method: 'get',
       params: {
         id: payload.musicid,
@@ -33,11 +33,11 @@ export const getSongabout = payload => {
       })
       .catch(err => {
         reject(err);
-      });
-  });
-  //获取热门歌曲评论,传入歌曲id，limit限制条数0: 歌曲 1: mv 2: 歌单 3: 专辑 4: 电台 5: 视频
-  var getComments = new Promise((resolve, reject) => {
-    return request(api.getComments, {
+      }),
+  );
+  // 获取热门歌曲评论,传入歌曲id，limit限制条数0: 歌曲 1: mv 2: 歌单 3: 专辑 4: 电台 5: 视频
+  const getComments = new Promise((resolve, reject) =>
+    request(api.getComments, {
       method: 'get',
       params: {
         id: payload.musicid,
@@ -51,30 +51,30 @@ export const getSongabout = payload => {
       })
       .catch(err => {
         reject(err);
-      });
-  });
+      }),
+  );
   // 传入用户id获取用户喜欢歌单
-  var getUserLikelist = new Promise((resolve, reject) => {
-    return request(api.getUserLikelist, {
+  const getUserLikelist = new Promise((resolve, reject) =>
+    request(api.getUserLikelist, {
       method: 'get',
       params: {
         uid: payload.currenuserid,
       },
     })
       .then(res => {
-        console.log(res);
+        console.log('歌曲详情', res);
         return Promise.all(
-          res.ids.map(item => {
-            return request(api.songdetail, {
+          res.ids.map(item =>
+            request(api.songdetail, {
               method: 'get',
               params: {
                 ids: item,
               },
             }).then(res => {
-              console.log(res);
+              console.log('歌曲详情', res);
               return res.data.songs[0];
-            });
-          }),
+            }),
+          ),
         )
           .then(final => {
             resolve({ likelist: final });
@@ -85,11 +85,11 @@ export const getSongabout = payload => {
       })
       .catch(err => {
         reject(err);
-      });
-  });
-  //传入歌曲id获取相似歌曲
-  var getSimilarMusic = new Promise((resolve, reject) => {
-    return request(api.getSimilarMusic, {
+      }),
+  );
+  // 传入歌曲id获取相似歌曲
+  const getSimilarMusic = new Promise((resolve, reject) =>
+    request(api.getSimilarMusic, {
       method: 'get',
       params: {
         id: payload.musicid,
@@ -101,8 +101,8 @@ export const getSongabout = payload => {
       })
       .catch(err => {
         reject(err);
-      });
-  });
+      }),
+  );
   return Promise.all(
     [getLyrics, getComments, getSimilarMusic, getUserLikelist].map(p =>
       p.catch(err => err),
@@ -118,9 +118,9 @@ export const getSongabout = payload => {
     });
 };
 
-//获取评论数量
-export const getCommentsLength = payload => {
-  return request(api.getCommentsLength, {
+// 获取评论数量
+export const getCommentsLength = payload =>
+  request(api.getCommentsLength, {
     method: 'get',
     params: {
       id: payload,
@@ -133,11 +133,10 @@ export const getCommentsLength = payload => {
     .catch(err => {
       console.log(err);
     });
-};
 
-//获取用户歌单
-export const getUserPlaylist = payload => {
-  return request(api.getUserPlaylist, {
+// 获取用户歌单
+export const getUserPlaylist = payload =>
+  request(api.getUserPlaylist, {
     method: 'get',
     params: {
       uid: payload,
@@ -150,11 +149,10 @@ export const getUserPlaylist = payload => {
     .catch(err => {
       console.log(err);
     });
-};
 
-//获取歌曲详情,传入歌曲id
-export const getMusicInfo = payload => {
-  return request(api.getMusicInfo, {
+// 获取歌曲详情,传入歌曲id
+export const getMusicInfo = payload =>
+  request(api.getMusicInfo, {
     method: 'get',
     params: {
       ids: payload,
@@ -167,10 +165,9 @@ export const getMusicInfo = payload => {
     .catch(err => {
       console.log(err);
     });
-};
 //   获取歌词
-export const getLyrics = payload => {
-  return request(api.getLyrics, {
+export const getLyrics = payload =>
+  request(api.getLyrics, {
     method: 'get',
     params: {
       id: payload,
@@ -183,13 +180,12 @@ export const getLyrics = payload => {
     .catch(err => {
       console.log(err);
     });
-};
-//通过歌曲详情的专辑id来获取歌曲封面
-export const getAblumInfo = payload => {
-  return request(api.getAblumInfo, {
+// 通过歌曲详情的专辑id来获取歌曲封面
+export const getAblumInfo = payload =>
+  request(api.getAblumInfo, {
     method: 'get',
     params: {
-      id: payload, //专辑id
+      id: payload, // 专辑id
     },
   })
     .then(res => {
@@ -199,11 +195,10 @@ export const getAblumInfo = payload => {
     .catch(err => {
       console.log(err);
     });
-};
 
-//歌曲url 传入歌曲id
-export const getSongUrl = payload => {
-  return request(api.getSongUrl, {
+// 歌曲url 传入歌曲id
+export const getSongUrl = payload =>
+  request(api.getSongUrl, {
     method: 'get',
     params: {
       id: payload,
@@ -216,18 +211,17 @@ export const getSongUrl = payload => {
     .catch(err => {
       console.log(err);
     });
-};
 
-//提交评论
-export const submitComment = ({ id, content, commentId }) => {
-  return request(api.submitComment, {
+// 提交评论
+export const submitComment = ({ id, content, commentId }) =>
+  request(api.submitComment, {
     method: 'post',
     params: {
       t: '1',
       type: '0',
-      id, //歌曲id
+      id, // 歌曲id
       content,
-      commentId, //userid
+      commentId, // userid
     },
     headers: {
       'Content-Type': 'application/json',
@@ -237,33 +231,32 @@ export const submitComment = ({ id, content, commentId }) => {
       console.log(res);
       return res.data;
     })
-    .catch(err => {});
-};
-//获取ThreadId
-function getThreadId(targetid, time) {
-  return request(api.getThreadId, {
-    method: 'get',
-    params: {
-      uid: targetid,
-    },
-  }).then(res => {
-    let result = res.data.events.filter(item => {
-      item.eventTime != time;
-    });
-    let { threadId } = result[0].info;
-    return threadId;
-  });
-}
-//回复动态评论
-export const reply = ({ targetid, id, content, commentId, time }) => {
-  return request(api.reply, {
+    .catch(err => console.log(err));
+// 获取ThreadId
+// function getThreadId(targetid, time) {
+//   return request(api.getThreadId, {
+//     method: 'get',
+//     params: {
+//       uid: targetid,
+//     },
+//   }).then((res) => {
+//     const result = res.data.events.filter((item) => {
+//       item.eventTime !== time;
+//     });
+//     const { threadId } = result[0].info;
+//     return threadId;
+//   });
+// }
+// 回复动态评论
+export const reply = ({ targetid, id, content, commentId, time }) =>
+  request(api.reply, {
     method: 'get',
     params: {
       t: 2,
       type: 6,
-      id, //歌曲id
+      id, // 歌曲id
       content,
-      commentId, //userid
+      commentId, // userid
     },
   })
     .then(res => {
@@ -273,8 +266,7 @@ export const reply = ({ targetid, id, content, commentId, time }) => {
     .catch(err => {
       console.log(err);
     });
-};
-//点赞
+// 点赞
 export const clicklike = ({ targetid, id, content, commentId, time }) => {
   // let threadId = getThreadId(targetid,time)
   console.log(id);
@@ -283,8 +275,8 @@ export const clicklike = ({ targetid, id, content, commentId, time }) => {
     params: {
       t: 1,
       type: 0,
-      cid: id, //歌曲id
-      id: targetid, //评论id
+      cid: id, // 歌曲id
+      id: targetid, // 评论id
     },
   })
     .then(res => {

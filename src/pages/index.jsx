@@ -1,20 +1,20 @@
 import React from 'react';
 
+import { connect } from 'umi';
+import Cookies from 'js-cookie';
 import Swiper from '../components/common/swiper/swiper';
 import Recommend from '../components/container/recommend/recommend';
 import Foot from '../components/common/foot/foot';
 import ScrollTop from '../components/common/scrolltop/scrolltop';
-import Hidewindow from '../components/common/hidewindow/hidewindow';
-import { connect } from 'umi';
-import Cookies from 'js-cookie';
 
 class Index extends React.Component {
   componentDidMount() {
     document.title = '网易云音乐';
-    let uid = Cookies.get('uid');
+    const uid = Cookies.get('uid');
     if (uid && !this.props.userloginfo.userlogstatus) {
       this.props.dispatch({
         type: 'userinfo/dogetuserdetail',
+        // eslint-disable-next-line radix
         payload: parseInt(uid),
       });
     }
@@ -22,6 +22,7 @@ class Index extends React.Component {
       type: 'recommend/AsyncgetDailyRecommendMusic',
     });
   }
+
   render() {
     const { dispatch, userloginfo } = this.props;
     console.log(this.props);

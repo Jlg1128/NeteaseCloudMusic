@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import {
   getMusicInfo,
   getAblumInfo,
@@ -9,6 +10,9 @@ import {
   reply,
   clicklike,
 } from '../service/song';
+
+import { deepClone } from '../util/util';
+
 export default {
   namespace: 'songabout',
   state: {
@@ -47,20 +51,20 @@ export default {
       newstate.similarMusic = [...result.similarMusic];
       return newstate;
     },
-    //获取评论长度
+    // 获取评论长度
     getCommentsLength(state, action) {
       const newstate = deepClone(state);
       newstate.commentsLength = action.payload;
       return newstate;
     },
-    //音乐详情
+    // 音乐详情
     getMusicInfo(state, action) {
       const newstate = deepClone(state);
-      var originmusic = newstate.musicInfo;
+      const originmusic = newstate.musicInfo;
       newstate.musicInfo = { ...originmusic, ...action.payload };
       return newstate;
     },
-    //lyric
+    // lyric
     getLyrics(state, action) {
       const newstate = deepClone(state);
       newstate.lyrics = action.payload;
@@ -68,9 +72,9 @@ export default {
     },
   },
   effects: {
-    //获取歌曲相关信息
+    // 获取歌曲相关信息
     *getMusicAbout({ payload }, { call, put }) {
-      var result = yield call(getSongabout, payload);
+      const result = yield call(getSongabout, payload);
       if (result) {
         yield put({
           type: 'getSongabout',
@@ -79,7 +83,7 @@ export default {
       }
     },
 
-    //提交评论
+    // 提交评论
     *submitCommentAsync({ payload }, { call, put }) {
       const result = yield call(submitComment, payload);
       console.log(result);
@@ -90,7 +94,7 @@ export default {
       //     })
       // }
     },
-    //回复评论
+    // 回复评论
     *replyAsync({ payload }, { call, put }) {
       const result = yield call(reply, payload);
       console.log(result);
@@ -101,12 +105,12 @@ export default {
       //     })
       // }
     },
-    //点赞
+    // 点赞
     *clicklikeAsync({ payload }, { call, put }) {
       const result = yield call(clicklike, payload);
       console.log(result);
     },
-    //获取歌词
+    // 获取歌词
     *getLyricsAsync({ payload }, { call, put }) {
       const result = yield call(getLyrics, payload);
       if (result) {
@@ -117,9 +121,9 @@ export default {
       }
     },
 
-    //获取歌曲详情,以及歌曲封面，以及音乐url
+    // 获取歌曲详情,以及歌曲封面，以及音乐url
     *getMusicInfoAsync({ payload }, { call, put }) {
-      var newresult = yield call(getMusicInfo, payload);
+      const newresult = yield call(getMusicInfo, payload);
       if (newresult.ar) {
         yield put({
           type: 'getMusicInfo',
@@ -132,16 +136,16 @@ export default {
             songname: newresult.name,
           },
         });
-        //获取歌词
+        // 获取歌词
         yield put({
           type: 'getLyricsAsync',
-          payload: payload,
+          payload,
         });
-        //获取歌曲评论长度
+        // 获取歌曲评论长度
         const commensLength = yield call(getCommentsLength, payload);
-        const albumResult = yield call(getAblumInfo, newresult.al.id); //获取专辑信息来获取歌曲封面图片
-        const songurl = yield call(getSongUrl, payload); //获取音乐url
-        //获取音乐url
+        const albumResult = yield call(getAblumInfo, newresult.al.id); // 获取专辑信息来获取歌曲封面图片
+        const songurl = yield call(getSongUrl, payload); // 获取音乐url
+        // 获取音乐url
         if (albumResult) {
           yield put({
             type: 'getMusicInfo',
@@ -164,8 +168,3 @@ export default {
     },
   },
 };
-function deepClone(obj) {
-  let newobj = JSON.stringify(obj),
-    currentObj = JSON.parse(newobj);
-  return currentObj;
-}

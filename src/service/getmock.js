@@ -8,14 +8,14 @@ export function getmusicinfo() {
   return request('/api/musicinfo');
 }
 
-export function getToplist(params) {
+export function getToplist() {
   return request('/api/Toplist');
 }
 
-export function getToplist2(params) {
+export function getToplist2() {
   return request('/api/Toplist2');
 }
 
-export function getImages(params) {
+export function getImages() {
   return request('/api/images');
 }

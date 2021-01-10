@@ -1,13 +1,15 @@
-import React from 'react';
-import { Component } from 'react';
-import Nav from '../components/common/nav/nav';
-import Head_nav from '../components/common/head_nav/head_nav';
-import Modal from '../components/common/modal/modal';
+import React, { Component } from 'react';
+
 import { connect } from 'umi';
+import Nav from '../components/common/nav/nav';
+import HeadNav from '../components/common/head_nav/head_nav';
+import Modal from '../components/common/modal/modal';
+
 class Layout extends Component {
   componentDidMount() {
     document.title = '网易云音乐';
   }
+
   render() {
     const { clickindex, dispatch, userloginfo, alert } = this.props;
     return (
@@ -19,7 +21,7 @@ class Layout extends Component {
           logstatus={userloginfo.userlogstatus}
           avatarurl={userloginfo.userinfo.avatarUrl}
         />
-        <Head_nav clickIndex={0} />
+        <HeadNav clickIndex={0} />
         <Modal dispatch={dispatch} />
         {this.props.children}
       </div>

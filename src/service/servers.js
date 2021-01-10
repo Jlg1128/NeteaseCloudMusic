@@ -1,42 +1,42 @@
 import { request } from '../util/request';
 import { arrayExchange } from '../util/util';
 
-//首页相关api，以及用户登录状态api
+// 首页相关api，以及用户登录状态api
 const api = {
-  banner: `/banner`,
-  recommendMusic: `/personalized/newsong`,
-  hotJoinedSinger: `/top/artists`,
-  HotZhubolist: `/dj/toplist/newcomer`,
-  NewestAblum: `/top/album`,
-  handelSearch: `/search/suggest`,
+  banner: '/banner',
+  recommendMusic: '/personalized/newsong',
+  hotJoinedSinger: '/top/artists',
+  HotZhubolist: '/dj/toplist/newcomer',
+  NewestAblum: '/top/album',
+  handelSearch: '/search/suggest',
 
-  userlogin: `/login/cellphone`,
-  userlogstatus: `/login/status`,
-  userdetail: `/user/detail`,
+  userlogin: '/login/cellphone',
+  userlogstatus: '/login/status',
+  userdetail: '/user/detail',
 };
 
 export const getRecommendMusicInfo = () => {
-  //首页轮播图
-  var getIndexSwiper = new Promise((resolve, reject) => {
-    return request(api.banner)
+  // 首页轮播图
+  const getIndexSwiper = new Promise((resolve, reject) =>
+    request(api.banner)
       .then(res => {
         console.log(res);
         resolve({ IndexSwiper: res.data.banners });
       })
-      .catch(err => reject(err));
-  });
-  //热门推荐
-  var getRecommendMusic = new Promise((resolve, reject) => {
-    return request(api.recommendMusic)
+      .catch(err => reject(err)),
+  );
+  // 热门推荐
+  const getRecommendMusic = new Promise((resolve, reject) =>
+    request(api.recommendMusic)
       .then(res => {
         console.log(res);
         resolve({ dailyrecommendmusic: res.data.result.slice(0, 8) });
       })
-      .catch(err => reject(err));
-  });
-  //获取入住热门歌手
-  var getHotJoinedSinger = new Promise((resolve, reject) => {
-    return request(api.hotJoinedSinger, {
+      .catch(err => reject(err)),
+  );
+  // 获取入住热门歌手
+  const getHotJoinedSinger = new Promise((resolve, reject) =>
+    request(api.hotJoinedSinger, {
       method: 'get',
       params: {
         limit: 5,
@@ -46,11 +46,11 @@ export const getRecommendMusicInfo = () => {
         console.log(res);
         resolve({ HotJoinedSinger: res.data.artists });
       })
-      .catch(err => reject(err));
-  });
-  //获取热门主播
-  var getHotZhubolist = new Promise((resolve, reject) => {
-    return request(api.HotZhubolist, {
+      .catch(err => reject(err)),
+  );
+  // 获取热门主播
+  const getHotZhubolist = new Promise((resolve, reject) =>
+    request(api.HotZhubolist, {
       method: 'get',
       params: {
         limit: 5,
@@ -60,11 +60,11 @@ export const getRecommendMusicInfo = () => {
         console.log(res);
         resolve({ HotZhubo: res.data.data.list });
       })
-      .catch(err => reject(err));
-  });
-  //新碟上架
-  var getNewestAblum = new Promise((resolve, reject) => {
-    return request(api.NewestAblum, {
+      .catch(err => reject(err)),
+  );
+  // 新碟上架
+  const getNewestAblum = new Promise((resolve, reject) =>
+    request(api.NewestAblum, {
       method: 'get',
       params: {
         limit: 5,
@@ -74,13 +74,13 @@ export const getRecommendMusicInfo = () => {
         console.log(res);
         resolve({ NewestAblum: res.data.albums });
       })
-      .catch(err => reject(err));
-  });
+      .catch(err => reject(err)),
+  );
   /**
    * 接口失效
    */
 
-  //飙升榜
+  // 飙升榜
   // var gettoplisthot = new Promise((resolve, reject) => {
   //   return request('http://localhost:3000/top/list', {
   //     method: "get",
@@ -92,7 +92,7 @@ export const getRecommendMusicInfo = () => {
   //     .then(res => resolve({toplisthot:res.playlist.tracks.slice(0, 10)}))
   //     .catch(err => reject(err))
   // })
-  //首页榜单-新歌榜
+  // 首页榜单-新歌榜
   // var gettoplistnewest = new Promise((resolve, reject) => {
   //   return request('http://localhost:3000/top/list', {
   //     method: "get",
@@ -104,7 +104,7 @@ export const getRecommendMusicInfo = () => {
   //     .then(res => resolve({toplistnewest:res.playlist.tracks.slice(0, 10)}))
   //     .catch(err => reject(err))
   // })
-  //首页榜单-原创榜
+  // 首页榜单-原创榜
   // var gettoplistorigin = new Promise((resolve, reject) => {
   //   return request('http://localhost:3000/top/list', {
   //     method: "get",
@@ -116,7 +116,7 @@ export const getRecommendMusicInfo = () => {
   //     .then(res => resolve({toplisthotorigin:res.playlist.tracks.slice(0, 10)}))
   //     .catch(err => reject(err))
   // })
-  //,gettoplisthot,gettoplistnewest,gettoplistorigin 三个接口不能用了
+  // ,gettoplisthot,gettoplistnewest,gettoplistorigin 三个接口不能用了
   return Promise.all([
     getIndexSwiper,
     getRecommendMusic,
@@ -125,7 +125,7 @@ export const getRecommendMusicInfo = () => {
     getNewestAblum,
   ])
     .then(res => {
-      let final = arrayExchange(res);
+      const final = arrayExchange(res);
       console.log(final);
       return final;
     })
@@ -134,9 +134,9 @@ export const getRecommendMusicInfo = () => {
     });
 };
 
-//用户登录
-export const userlog = payload => {
-  return request(api.userlogin, {
+// 用户登录
+export const userlog = payload =>
+  request(api.userlogin, {
     method: 'get',
     credentials: 'include',
     params: {
@@ -144,40 +144,29 @@ export const userlog = payload => {
       password: payload.password,
     },
   })
-    .then(res => {
-      return res.data;
-    })
-    .catch(err => {
-      return { code: 502 };
-    });
-};
+    .then(res => res.data)
+    .catch(err => ({ code: 502 }));
 
-//获取用户登录状态
-export const getuserlogstatus = payload => {
-  return request(api.userlogstatus);
-};
+// 获取用户登录状态
+export const getuserlogstatus = payload => request(api.userlogstatus);
 
-//登录获取用户详情,传入用户id
-export const userdetail = uid => {
-  return request(api.userdetail, {
+// 登录获取用户详情,传入用户id
+export const userdetail = uid =>
+  request(api.userdetail, {
     method: 'get',
     params: {
       uid,
     },
   });
-};
-//搜索关键字提示
-export const handelSearch = keywords => {
-  return request(api.handelSearch, {
+// 搜索关键字提示
+export const handelSearch = keywords =>
+  request(api.handelSearch, {
     method: 'get',
     params: {
       keywords,
     },
   })
-    .then(res => {
-      return res.data.result;
-    })
+    .then(res => res.data.result)
     .catch(err => {
       console.log(err);
     });
-};

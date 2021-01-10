@@ -1,4 +1,8 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { getRecommendMusicInfo } from '../service/servers';
+
+import { deepClone } from '../util/util';
+
 export default {
   namespace: 'recommend',
   state: {
@@ -30,14 +34,14 @@ export default {
 
       return newstate;
     },
-    //设置登录方式弹窗
+    // 设置登录方式弹窗
     setVisible(state, action) {
       const newstate = deepClone(state);
       newstate.visible = action.payload;
       return newstate;
     },
 
-    //设置注册方式弹窗
+    // 设置注册方式弹窗
     setRegisterVisible(state, action) {
       const newstate = deepClone(state);
       newstate.registervisible = action.payload;
@@ -50,7 +54,7 @@ export default {
     },
   },
   effects: {
-    //获取首页推荐音乐
+    // 获取首页推荐音乐
     *AsyncgetDailyRecommendMusic({ payload }, { call, put }) {
       const result = yield call(getRecommendMusicInfo, payload);
       console.log(result);
@@ -64,8 +68,3 @@ export default {
     },
   },
 };
-function deepClone(obj) {
-  let newobj = JSON.stringify(obj),
-    currentObj = JSON.parse(newobj);
-  return currentObj;
-}
