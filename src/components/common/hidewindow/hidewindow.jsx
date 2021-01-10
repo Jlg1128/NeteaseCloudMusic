@@ -102,8 +102,8 @@ export default class Hidewindow extends Component {
         >
           <div className={cssobj.title}>
             <span>
-              播放列表(
-              {likelist ? likelist.length : 0})
+              播放列表
+              {likelist ? likelist.length : 0}
             </span>
           </div>
           <ul>
