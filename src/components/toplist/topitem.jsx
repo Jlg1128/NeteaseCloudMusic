@@ -18,7 +18,7 @@ class TopItem extends Component {
         span: '新歌榜',
         h4: '云音乐新歌榜',
         p: '每天更新',
-        bgc: 'blue',
+        bgc: '#0c73c2',
       },
       {
         id: 32132,

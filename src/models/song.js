@@ -22,7 +22,7 @@ export default {
     commentsLength: 0,
     musicInfo: {
       picUrl:
-        'https://p2.music.126.net/_P62J8rc2wRIzoqIJGu2LA==/109951165120360797.jpg',
+        'https://p2.music.126.net/_P62J8rc2wRIzoqIJGu2LA==/109951165120360797.jpg?param=140y140',
       singername: '',
       albmunname: '',
       albumid: '',

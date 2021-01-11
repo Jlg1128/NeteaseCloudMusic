@@ -121,14 +121,14 @@ class Songinfo extends Component {
                 </div>
                 <div>
                   &nbsp;&nbsp;歌手:
-                  <a style={{ color: 'blue' }} href="">
+                  <a style={{ color: '#0c73c2' }} href="">
                     &nbsp;&nbsp;
                     {musicInfo.singername}
                   </a>
                 </div>
                 <div>
                   &nbsp;&nbsp;所属专辑:
-                  <a style={{ color: 'blue' }} href="">
+                  <a style={{ color: '#0c73c2' }} href="">
                     &nbsp;&nbsp;
                     {musicInfo.albmunname}
                   </a>
@@ -152,7 +152,7 @@ class Songinfo extends Component {
                   {lrc.slice(12).map((item, index) => <p key={`${item}_${index}`}>{item}</p>)}
                 </div>
                 <div className={cssobj.show}>
-                  <a style={{ color: 'blue' }} onClick={() => this.exchangeDropdown()}>
+                  <a style={{ color: '#0c73c2' }} onClick={() => this.exchangeDropdown()}>
                     {iconchange}
                     展开
                   </a>

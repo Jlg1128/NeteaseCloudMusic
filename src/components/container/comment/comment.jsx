@@ -100,12 +100,12 @@ export default class CommentItem extends Component {
           <div className={cssobj.comment_avatar}>
             <img
               style={{ width: 50, height: 50 }}
-              src={comment.user.avatarUrl}
+              src={`${comment.user.avatarUrl}?param=50y50`}
               alt=""
             />
           </div>
           <span className={cssobj.comment_username}>
-            <a style={{ color: 'blue' }} href="">
+            <a style={{ color: '#0c73c2' }} href="">
               {comment.user.nickname}
             </a>
             &nbsp;:&nbsp;
@@ -115,7 +115,6 @@ export default class CommentItem extends Component {
           <span className={cssobj.reply}>
             <img
               onClick={this.clicklike}
-              style={{ width: 22, height: 22, cursor: 'pointer' }}
               src="/static/点赞.png"
               alt=""
             />

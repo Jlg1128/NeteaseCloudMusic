@@ -7,8 +7,7 @@ import parsePath from '../../../util/parseTargettype';
 import cssobj from './swiper.less';
 import './swiper.less';
 
-const url =
-  'http://p1.music.126.net/ma8NC_MpYqC-dK_L81FWXQ==/109951163250233892.jpg';
+const url = 'http://p1.music.126.net/ma8NC_MpYqC-dK_L81FWXQ==/109951163250233892.jpg?imageView&quality=89';
 
 export default class Swiper extends Component {
   getSwiper = () => {
@@ -21,7 +20,7 @@ export default class Swiper extends Component {
             return (
               <div key={index}>
                 <Link to={`${path}${item.targetId}`}>
-                  <img src={item.imageUrl} alt="" />
+                  <img src={`${item.imageUrl}?imageView&quality=89`} alt="" />
                 </Link>
               </div>
             );
