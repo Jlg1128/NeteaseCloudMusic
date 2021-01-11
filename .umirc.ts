@@ -14,6 +14,8 @@ export default defineConfig({
     exclude: [],
   },
   //按需加载
-  dynamicImport: {},
+  dynamicImport: {
+    loading: '../../components/common/Loading',
+  },
   // ssr: { mode: 'stream' },
 });

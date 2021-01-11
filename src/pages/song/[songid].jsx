@@ -106,7 +106,6 @@ class Songinfo extends Component {
               </div>
               <p>
                 <a href="">生成外链播放器</a>
-                {' '}
               </p>
             </div>
             {/* 歌曲主题界面 */}
