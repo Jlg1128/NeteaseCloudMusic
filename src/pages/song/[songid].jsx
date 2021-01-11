@@ -102,7 +102,7 @@ class Songinfo extends Component {
           <div className={`${cssobj.wrap} ${cssobj.clearfix}`}>
             <div className={cssobj.songlogo}>
               <div>
-                {comments.length > 0 ? <img src={musicInfo.picUrl} alt="" /> : <div>Loading</div>}
+                {comments.length > 0 ? <img src={`${musicInfo.picUrl}?param=130y130`} alt="" /> : <div>Loading</div>}
               </div>
               <p>
                 <a href="">生成外链播放器</a>
